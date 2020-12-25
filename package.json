@@ -1,0 +1,60 @@
+{
+  "name": "movieapp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@cypress/code-coverage": "^3.8.6",
+    "@fortawesome/fontawesome-free": "^5.15.1",
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@react-firebase/auth": "^0.2.10",
+    "@react-firebase/database": "^0.3.11",
+    "antd": "^4.8.2",
+    "bootstrap": "^4.3.1",
+    "dotenv": "^8.2.0",
+    "firebase": "^8.0.1",
+    "istanbul-lib-coverage": "^3.0.0",
+    "nyc": "^15.1.0",
+    "react": "^16.11.0",
+    "react-blur": "^0.6.0",
+    "react-dom": "^16.11.0",
+    "react-hook-form": "^3.29.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "reactfire": "^2.0.0-alpha.3"
+  },
+  "scripts": {
+    "storybook": "start-storybook -s ./public -p 6006 -c ./.storybook",
+    "start": "react-scripts -r @cypress/instrument-cra start",
+    "build": "react-scripts -r @cypress/instrument-cra build",
+    "test": "percy exec -- cypress run",
+    "eject": "react-scripts eject",
+    "test:e2e": "cypress run",
+    "cypress": "cypress",
+    "start:ci": "start-server-and-test 'http-server ./build  -p 3000' 3000 'cypress run --browser chrome '"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@cypress/instrument-cra": "^1.4.0",
+    "@percy/cypress": "^2.3.2",
+    "@storybook/addon-actions": "^5.3.1",
+    "@storybook/react": "^5.3.1",
+    "babel-loader": "^8.0.6",
+    "cypress": "^5.5.0",
+    "cypress-layout-inspector": "^1.3.1",
+    "start-server-and-test": "^1.10.6"
+  }
+}
