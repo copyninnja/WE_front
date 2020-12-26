@@ -9,22 +9,10 @@ const SiteHeader = () => {
     <nav className="navbar  navbar-light fixed-top  bg-dark ">
       <nav className="navbar-brand text-white">
         <Link className=" text-white" to="/">
-          TMDB Client
+       <img class="weSp" src="./we_sp.png" />
         </Link>
       </nav>
-      <FontAwesomeIcon
-        className="navbar-text text-light"
-        icon={["fas", "video"]}
-        size="3x"
-      />
-      <span className="navbar-text text-light">
-        For the movie enthusiast !!
-      </span>
-      <FontAwesomeIcon
-        className="navbar-text text-light"
-        icon={["fas", "film"]}
-        size="3x"
-      />
+      <span className="navbar-brand text-white">For the sport and enthusiast !!</span>
       <nav className="navbar navbar-expand ">
         <ul className="navbar-nav">
           <li className="nav-item">
