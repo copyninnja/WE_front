@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import HomePage from "./pages/Homepage";
 import { BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
-import SiteHeader from './components/siteHeader'
+import SiteHeader from './components/siteHeader';
+import LoginPage from "./pages/LoginPage";
 
 import AuthContextProvider from "./contexts/authContext";
 
@@ -24,8 +25,8 @@ const App = () => {
 
             <Switch>
           {/* <PrivateRoute exact path="/movies/TopRate" component={TopRatePage}/> */}
-          {/* <Route exact path="/login" component={loginPage} />
-          <Route exact path="/register" component={register} /> */}
+         <Route exact path="/login" component={LoginPage} /> 
+          {/* <Route exact path="/register" component={register} /> */}
           <Route path="/" component={HomePage} />
           <Redirect from="*" to="/" />
         </Switch>

@@ -1,21 +1,37 @@
 import React, { useState, createContext } from "react";
-import firebase from "firebase/app";
-import "firebase/auth";
+import { login, signup } from "../api/Login_api";
+
 export const AuthContext = createContext(null);
 
 const AuthContextProvider = (props) => {
+  const existingToken = localStorage.getItem("token");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authToken, setAuthToken] = useState(existingToken);
+  const [email, setEmail] = useState("");
 
-  const authenticate = (username, password) => {
-    setTimeout(() => {
-      // validate user
+  //Function to put JWT token in local storage.
+  const setToken = (data) => {
+    localStorage.setItem("token", data);
+    setAuthToken(data);
+  }
+
+  const authenticate = async (email, password) => {
+    const result = await login(email, password);
+    if (result.token) {
+      setToken(result.token)
       setIsAuthenticated(true);
-    }, 100);
+      setEmail(email);
+    }
+  };
+
+  const register = async (email, password) => {
+    const result = await signup(email, password);
+    console.log(result.code);
+    return (result.code == 201) ? true : false;
   };
 
   const signout = () => {
-    setTimeout(() => setIsAuthenticated(false), 1);
-    firebase.auth().signOut();
+    setTimeout(() => setIsAuthenticated(false), 100);
   }
 
   return (
@@ -23,7 +39,9 @@ const AuthContextProvider = (props) => {
       value={{
         isAuthenticated,
         authenticate,
+        register,
         signout,
+        email: email
       }}
     >
       {props.children}
