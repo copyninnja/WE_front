@@ -5,10 +5,10 @@ import HomePage from "./pages/Homepage";
 import { BrowserRouter, Route, Redirect, Switch} from "react-router-dom";
 import SiteHeader from './components/siteHeader';
 import LoginPage from "./pages/LoginPage";
-
+import PrivateRoute from './contexts/privateRoute';
+import ShopList from '../src/components/CardList';
 import AuthContextProvider from "./contexts/authContext";
-
-// import PrivateRoute from './components/privateRoute';
+import registerPage from './pages/RegisterPage';
 
 
 
@@ -22,12 +22,11 @@ const App = () => {
         <div className="jumbotron">
           <SiteHeader />      {/* New Header  */}
           <div className="container-fluid">
-
             <Switch>
-          {/* <PrivateRoute exact path="/movies/TopRate" component={TopRatePage}/> */}
-         <Route exact path="/login" component={LoginPage} /> 
-          {/* <Route exact path="/register" component={register} /> */}
-          <Route path="/" component={HomePage} />
+         <Route  path="/login" component={LoginPage} /> 
+          <Route  path="/register" component={registerPage} />
+          <Route  path="/shop" component={ShopList} />
+          <Route exact path="/" component={HomePage} />
           <Redirect from="*" to="/" />
         </Switch>
 

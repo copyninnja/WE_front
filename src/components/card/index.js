@@ -15,7 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import './card.css'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -46,8 +46,13 @@ export default function RecipeReviewCard() {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //含最大值，含最小值 
+  }
   return (
+    <div className="card col-sm-3" >
     <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -65,7 +70,7 @@ export default function RecipeReviewCard() {
       />
       <CardMedia
         className={classes.media}
-        image="/static/images/cards/paella.jpg"
+        image={`shoe${getRandomIntInclusive(1,3)}.jpg`}
         title="Paella dish"
       />
       <CardContent>
@@ -122,5 +127,6 @@ export default function RecipeReviewCard() {
         </CardContent>
       </Collapse>
     </Card>
+    </div>
   );
 }

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import PageTemplate from '../components/templatePage'
-import CardList from '../components/cardList';
+import StoryList from '../components/StoryList';
 const HomePage = () => {
 
 
   return (
-    <CardList/>
+    <StoryList/>
   );
 };
 

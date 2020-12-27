@@ -14,10 +14,15 @@ const SiteHeader = () => {
       </nav>
       <span className="navbar-brand text-white">For  sport and enthusiast !!</span>
       <nav className="navbar navbar-expand ">
-        <ul className="navbar-nav">
+        <ul id="ulli" className="navbar-nav">
           <li className="nav-item">
             <Link className="nav-link text-white" to="/">
-              Home
+              Stories
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link text-white" to="./shop">
+              Shop
             </Link>
           </li>
 

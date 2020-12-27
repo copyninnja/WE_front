@@ -112,11 +112,20 @@ const useStyles = makeStyles((theme) => ({
    
       </Container>
     )
-    :(
-      <Link className=" text-black" to="/">
+    :(<div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>   
+      <br/>
+      <br/>
+      <br/>
+
+      <Link  className=" text-black" to="/">
       You've already loginin,
     Back to HomePage
-  </Link>         
+  </Link>       
+  </div>  
   )
 }
 
