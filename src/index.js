@@ -7,17 +7,18 @@ import SiteHeader from './components/siteHeader';
 import LoginPage from "./pages/LoginPage";
 import PrivateRoute from './contexts/privateRoute';
 import ShopList from '../src/components/CardList';
-import AuthContextProvider from "./contexts/authContext";
 import registerPage from './pages/RegisterPage';
-
+import { Provider } from 'react-redux' 
+import store from './redux/store'
 
 
 
 
 const App = () => {
-  return (  
+  return ( 
+     <Provider store={store}>
       <BrowserRouter>
-         <AuthContextProvider>
+  
          <Suspense fallback={<h1>Loading page....</h1>}>
         <div className="jumbotron">
           <SiteHeader />      {/* New Header  */}
@@ -33,8 +34,9 @@ const App = () => {
       </div> 
     </div> 
     </Suspense>
-    </AuthContextProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+    </Provider >
+  
 
   );
 };

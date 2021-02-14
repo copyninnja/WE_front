@@ -1,5 +1,4 @@
-import React ,{useContext}  from "react";
-import {AuthContext} from '../contexts/authContext';
+import React ,{ Component, useState }from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,39 +11,44 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import  useForm from 'react-hook-form';
+import { login } from '../redux/actions'
+import { connect } from 'react-redux';
 
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(1),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  }));
   
-  export default function SignIn() {
-    const classes = useStyles();
-    const {register,handleSubmit}= useForm();
-    const context = useContext(AuthContext);
+  const SignIn =(props)=> {
 
-    
-    const signin= props =>{
-      context.authenticate(props.email,props.password);
-     
-  }
-    return  !context.isAuthenticated ? (
+    const [state,setState] =useState({
+      email: '',
+      password: ''
+    })
+    const handleChange = (name, value) => {
+      setState({ [name]: value })
+    }
+    const signin=()=>{
+      props.login(state)
+      }
+
+     const useStyles=  makeStyles((theme) => ({
+      paper: {
+        marginTop: theme.spacing(8),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      },
+      avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+      },
+      form: {
+        width: '100%', // Fix IE 11 issue.
+        marginTop: theme.spacing(1),
+      },
+      submit: {
+        margin: theme.spacing(3, 0, 2),
+      },
+    }));
+    const classes =useStyles();
+    return  props.username=="" ? (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -53,11 +57,10 @@ const useStyles = makeStyles((theme) => ({
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form data-cy="form" className={classes.form} noValidate onSubmit={handleSubmit((data)=>signin(data))}>
+          <form data-cy="form" className={classes.form} noValidate >
             <TextField
               variant="outlined"
               margin="normal"
-              inputRef={register}
               data-cy="emailinput"
               required
               fullWidth
@@ -66,11 +69,11 @@ const useStyles = makeStyles((theme) => ({
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={val => handleChange('email', val)}
             />
             <TextField
               variant="outlined"
               margin="normal"
-              inputRef={register}
               required
               fullWidth
               data-cy="userpassword"
@@ -79,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={val => handleChange('password', val)}
             />
 
             <FormControlLabel
@@ -94,12 +98,15 @@ const useStyles = makeStyles((theme) => ({
               color="primary"
               className={classes.submit}
               data-cy="Sign In"
+              onClick= {signin}
             >
               Sign In
             </Button>
             <Grid container>
               <Grid item xs>
-                  Forgot password?
+              <Link to="./findpassword" variant="body2">
+                  {"forget password?"}
+                </Link>
               </Grid>
               <Grid item>
                 <Link to="./register" variant="body2">
@@ -128,5 +135,7 @@ const useStyles = makeStyles((theme) => ({
   </div>  
   )
 }
+ 
+export default connect(state => state.user, { login })(SignIn)
 
 

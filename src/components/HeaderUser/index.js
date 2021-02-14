@@ -2,15 +2,15 @@ import{faUser} from'@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React,{useContext} from "react";
 import { Link } from "react-router-dom";
-
+import Cookies from 'js-cookie'
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { AuthContext } from '../../contexts/authContext';
+import { reserMsg } from '../../redux/actions'
+import { connect } from 'react-redux'
 
 
-const HeaderUser = () => {
+const HeaderUser = (props) => {
         const [anchorEl, setAnchorEl] = React.useState(null);
-        const context = useContext(AuthContext);
 
         const open = Boolean(anchorEl);
 
@@ -22,12 +22,14 @@ const HeaderUser = () => {
             setAnchorEl(null);
         };
         const handleSignOut = () => {
-            context.signout();
-            setAnchorEl(null);
+          //清除cookie中的userId
+          Cookies.remove('userId')
+          //重置redux中的user状态
+          props.reserMsg()      
+                setAnchorEl(null);
         };
-
         // return console.log(context.isAuthenticated === true);
-        return !context.isAuthenticated ?(
+        return props.username=="" ?(
                 <div>
                 <FontAwesomeIcon
                 className="navbar-text text-light head-user"
@@ -89,4 +91,4 @@ const HeaderUser = () => {
 
 };
 
-export default HeaderUser; 
+export default connect(state => state.user, { reserMsg })(HeaderUser)
