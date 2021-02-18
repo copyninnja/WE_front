@@ -28,7 +28,6 @@ const HeaderUser = (props) => {
           props.reserMsg()      
                 setAnchorEl(null);
         };
-        // return console.log(context.isAuthenticated === true);
         return props.username=="" ?(
                 <div>
                 <FontAwesomeIcon

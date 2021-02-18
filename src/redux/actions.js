@@ -100,6 +100,7 @@ const readMsgs = ({count,from,to}) => ({
 })
 // 注册异步action
 export const register = ({username, email, password, password2, type }) => {
+  console.log("开始注册")
   // 进行前台表单验证, 如果不合法返回一个同步 action 对象, 显示提示信息
   const rep = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
   if (!username || !email || !password || !type) {
@@ -118,15 +119,17 @@ export const register = ({username, email, password, password2, type }) => {
   }
   
   return async dispatch => {
-    console.log(dispatch+"dispatch");
     // 发送注册的异步ajax请求
     const response = await reqRegister({ username, email, password, type })
     const res = response.data
     if (res.code === 0) {
+      console.log('注册成功')
       //分发成功的同步action
       getMsgList(dispatch,res.data._id) // 注册成功即登录成功的时候获取消息列表
       dispatch(authSuccess(res.data))
     } else {
+      console.log('注册失败')
+
       //分发失败的同步action
       window.alert(res.msg)
       dispatch(errorMsg(res.msg))

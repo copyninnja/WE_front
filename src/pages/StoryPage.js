@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import PageTemplate from '../components/templatePage'
+import React  from "react";
 import StoryList from '../components/StoryList';
 const HomePage = () => {
 

@@ -1,25 +1,42 @@
 import React, { Component }   from "react";
-import {AuthContext} from '../contexts/authContext';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link, Redirect } from "react-router-dom";
-import Grid from '@material-ui/core/Grid';
+import {  Redirect } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import  useForm from 'react-hook-form';
 import { register } from '../redux/actions'
-import { connect ,useSelector } from 'react-redux'
+import { connect } from 'react-redux'
   import Radio from '@material-ui/core/Radio';
   import RadioGroup from '@material-ui/core/RadioGroup';
   import FormControl from '@material-ui/core/FormControl';
   import FormLabel from '@material-ui/core/FormLabel';
-import  './form.css';
+import { withStyles } from '@material-ui/core/styles';
+import compose from 'recompose/compose';
+
   
+const styles=(theme)=>({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+})
   class Register extends Component {
     
     constructor () {
@@ -33,7 +50,6 @@ import  './form.css';
       }
     }
     regis = () => {
-      console.log(this.state);
       this.props.register(this.state)
     }
     handleChange = (name, val) => {
@@ -42,8 +58,11 @@ import  './form.css';
       })
     }
     render () {
-      const default_type='personal'
-  const {msg,redirectTo}=this.props
+      const default_type = 'personal'
+      const {
+        msg,
+        redirectTo
+      } = this.props
     if (redirectTo) {
       return <Redirect to={redirectTo}/>
     }
@@ -51,13 +70,13 @@ import  './form.css';
       
       <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className='paper'>
-        <Avatar variant="circular" sizes='large'>
+      <div className={this.props.classes.paper }>
+        <Avatar className={this.props.classes.avatar} >
         </Avatar>
         <Typography display="block" component="h1" variant="h5" align='center'>
          Register
         </Typography>
-        <form data-cy="form" className='form' noValidate  >
+        <form data-cy="form" className={this.props.classes.form} noValidate  >
         <TextField
             variant="outlined"
             margin="normal"
@@ -124,11 +143,11 @@ import  './form.css';
             label="Remember me"
           />
           <Button
-            type="submit"
+            type="button"
             fullWidth
             variant="contained"
             color="primary"
-            className='submit'
+            className={this.props.classes.submit}
             data-cy="Register"
             onClick={this.regis}
           >
@@ -142,6 +161,6 @@ import  './form.css';
     )
 }
 }
-export default connect(state => state.user, { register })(Register)
+export default compose(withStyles(styles),connect(state => state.user, { register })) (Register)
 
 

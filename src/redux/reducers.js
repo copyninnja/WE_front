@@ -24,6 +24,7 @@ function user (state = initUser, action) {
   switch (action.type) {
     case AUTH_SUCCESS:
       const { type, header } = action.data
+      console.log(type,header)
       return { ...action.data, redirectTo: setPath(type, header) }
     case ERROR_MSG:
       return { ...state, msg: action.data }

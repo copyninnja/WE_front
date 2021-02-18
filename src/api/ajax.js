@@ -11,7 +11,7 @@ export default function ajax (url, data = {}, types = 'GET') {
       Object.key(data).forEach(key => {
         paramStr += key + '=' + data[key] + '&'
       })
-      if (paramStr != '') {
+      if (paramStr !== '') {
         paramStr = paramStr.substring(0, paramStr.lastIndexOf('&'))
         url = url + '?' + paramStr
       }
