@@ -4,7 +4,7 @@ import ajax from './ajax'
 export const reqRegister=(user)=>ajax('/api/users/register',user,'POST')
 
 // 登录接口
-export const reqLogin=({username,password})=>ajax('/api/users/login',{username,password},"POST")
+export const reqLogin=({email,password})=>ajax('/api/users/login',{email,password},"POST")
 
 // 更新用户接口
 export const reqUpdataUser=(user)=>ajax('/api/users/update',user,'POST')

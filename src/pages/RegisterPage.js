@@ -51,6 +51,7 @@ const styles=(theme)=>({
     }
     regis = () => {
       this.props.register(this.state)
+      return false;
     }
     handleChange = (name, val) => {
       this.setState({
@@ -70,6 +71,7 @@ const styles=(theme)=>({
       
       <Container component="main" maxWidth="xs">
       <CssBaseline />
+      {msg? <div className='error-msg'>{msg}</div>:null}
       <div className={this.props.classes.paper }>
         <Avatar className={this.props.classes.avatar} >
         </Avatar>

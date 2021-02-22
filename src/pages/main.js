@@ -19,6 +19,8 @@ import ShopList from '../pages/ShopPage';
 import StoryPage from '../pages/StoryPage'
 import personalinfo from '../pages/personalinfo'
 import organizationinfo from '../pages/organizationinfo';
+import ChatPage from './ChatPage';
+import Chat from '../components/CHAT/MessengerCompose'
 
 class Main extends Component {
   constructor () {
@@ -82,6 +84,7 @@ class Main extends Component {
     const userId = Cookies.get('userId')
     const { unReadCount } = this.props
     if (!userId) {
+
       return <Redirect to={'/login'} />
     }
     // 路由跳转情况2：如果没有_id通过生命周期函数去请求用户信息获取用户信息实现自登陆
@@ -89,10 +92,9 @@ class Main extends Component {
     if (!this.props.user._id) {
       return null
     } else {
+
       let path = this.props.location.pathname
-      console.log('the path is '+path)
       if (path == '/'){
-      console.log('the usertype is '+this.props.user.type+'header is'+this.props.user.header)
         path = setPath(this.props.user.type, this.props.user.header)
       }
     //   const { navList } = this
@@ -112,7 +114,12 @@ class Main extends Component {
           <Route  path="/personalinfo" component={personalinfo} />
           <Route  path="/organizationinfo" component={organizationinfo} />
           <Route  path="/shop" component={ShopList} />
+          <Route  path="/personal" component={StoryPage} />
           <Route exact path="/story" component={StoryPage} />
+          <Route exact path="/chat" component={ChatPage} />
+          <Route path='/chat/:userId' component={Chat}>
+
+          </Route>
         <Redirect to={path} />
           </Switch>
 

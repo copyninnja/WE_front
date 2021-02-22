@@ -7,13 +7,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { reserMsg } from '../../redux/actions'
 import { connect } from 'react-redux'
-
+import {useSelector, useDispatch} from 'react-redux'
 
 const HeaderUser = (props) => {
         const [anchorEl, setAnchorEl] = React.useState(null);
-
+        const user = useSelector(state => state.user)
+        const dispatch = useDispatch()
         const open = Boolean(anchorEl);
-
         const handleMenu = (event) => {
             setAnchorEl(event.currentTarget);
         };
@@ -25,10 +25,12 @@ const HeaderUser = (props) => {
           //清除cookie中的userId
           Cookies.remove('userId')
           //重置redux中的user状态
-          props.reserMsg()      
-                setAnchorEl(null);
+
+          dispatch(reserMsg())
+          setAnchorEl(null);
         };
-        return props.username=="" ?(
+        // return console.log(context.isAuthenticated === true);
+        return user.username=="" ?(
                 <div>
                 <FontAwesomeIcon
                 className="navbar-text text-light head-user"
@@ -90,4 +92,4 @@ const HeaderUser = (props) => {
 
 };
 
-export default connect(state => state.user, { reserMsg })(HeaderUser)
+export default HeaderUser;

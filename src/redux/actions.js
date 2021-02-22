@@ -138,13 +138,13 @@ export const register = ({username, email, password, password2, type }) => {
 }
 
 // 登录异步action
-export const login = ({ username, password }) => {
-  if (!username || !password) {
-    return errorMsg('用户密码必须输入')
+export const login = ({email, password }) => {
+  if (!email || !password) {
+    return errorMsg('you have to input email and password')
   }
   return async dispatch => {
     // 发送注册的异步ajax请求
-    const response = await reqLogin({ username, password })
+    const response = await reqLogin({email, password })
     const res = response.data
     if (res.code === 0) {
       //分发成功的同步action

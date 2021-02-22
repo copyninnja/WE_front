@@ -4,6 +4,7 @@ import "../../globals/fontawesome";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./siteHeader.css";
 import HeaderUser from '../HeaderUser';
+import MessageNav from '../messageNav'
 const SiteHeader = () => {
   return (
     <nav className="navbar  navbar-light fixed-top  bg-dark ">
@@ -25,8 +26,9 @@ const SiteHeader = () => {
               Shop
             </Link>
           </li>
-
+           <MessageNav/>
            <HeaderUser/>
+
        </ul>
       </nav>
 

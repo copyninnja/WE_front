@@ -57,7 +57,7 @@ class Personalinfo extends Component {
     if (header) {
       //记得改回来!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   const path =type==='personal'?'/personal':'/organization'
-    const path='./story';
+    const path='/story';
       return <Redirect to={path}/>
     }
     return (
@@ -106,7 +106,7 @@ class Personalinfo extends Component {
     <FormLabel component="legend" style={{marginTop:'50px'}}>Gender</FormLabel>
     </div>
     <div className="col-sm">
-    <RadioGroup row aria-label="gender" name="gender" defaultValue='male' value={this.state.gender} id="radiogroup"   >
+    <RadioGroup row aria-label="gender" name="gender" defaultValue="male" value={this.state.gender} id="radiogroup"   >
       <FormControlLabel value="male" control={<Radio onClick={() => { this.handleChange('gender', 'male')}} />} label="male" />
       <FormControlLabel value="female" control={<Radio onClick={() => {this.handleChange('gender', 'female')}} />} label="female" />
     </RadioGroup>
