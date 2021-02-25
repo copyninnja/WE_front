@@ -9,22 +9,6 @@ import { connect } from 'react-redux';
 import './MessageList.css';
 class  MessageList extends Component{
 
-  state = {
-    content: '',
-    isShow: false //是否显示表情列表
-  }
-  // 第一次render之前的回调
-  componentWillMount () {
-    this.emojis = [
-      '😶',      '😪',      '😔',      '😎',      '😲',      '😳',      '❤',      '😰',      '😈',      '👿',      '💀',      '💋',      '👋',
-      '👌',      '👆',      '👈',      '👉',      '👇',      '👍',      '👊',      '👀',      '💪',      '👦',      '👧',
-      '🎅',      '🏃',      '🌂',      '👣',      '👙',      '👠',      '💄',      '🎒',      '👓',      '☂️',      '👯',
-      '👕',      '👰',      '👮',      '🙋',      '👴',      '🙌',      '👏'    ]
-    this.emojis = this.emojis.map(value => ({ text: value }))
-
-
-    // console.log(this.emojis)
-  }
 
   // 保证列表自动滑动到底部
   componentDidMount () {
@@ -42,27 +26,7 @@ class  MessageList extends Component{
     // 更新显示列表
     window.scrollTo(0, 1000000)
   }
-    // 点击发送消息
-    send = () => {
-      const from = this.props.props.props.user._id
-      const to = this.props.props.props.match.params.userId
-      const content = this.state.content.trim()
-      if (content) {
-        this.props.props.props.sendMsg({ from, to, content })
-        this.setState({ content: '' })
-      }
-    }
-    // 点击显示表情列表
-    toggleShow = () => {
-      const isShow = !this.state.isShow
-      this.setState({ isShow })
-      if (isShow) {
-        // 异步手动触发resize事件，解决表情列表显示的bug
-        setTimeout(() => {
-          window.dispatchEvent(new Event('resize'))
-        }, 0)
-      }
-    }
+
  
    getMessages = {
      id: 1,
@@ -183,9 +147,15 @@ render () {
           <ToolbarButton key="money" icon="ion-ios-card" />,
           <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
           <ToolbarButton key="emoji" icon="ion-ios-happy" />
-        ]}/>
+        ]}
+        state={this.state}
+        setState={this.setState}
+        send={this.send}
+        toggleShow={this.toggleShow}
+        emojis={this.emojis}
+        />
       </div>
     );
 }
 }
-export default connect(state => ({ user: state.user, chat: state.chatMsgList }, { sendMsg, readMsg })) (MessageList)
+export default connect(state => ({ user: state.user, chat: state.chatMsgList }, {  readMsg })) (MessageList)

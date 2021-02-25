@@ -5,7 +5,7 @@
   background: white;
   border-top: 1px solid #eeeef1;
   position: fixed;
-  width: calc(100% - 20px);
+  width: calc(50% - 50px);
   bottom: 0px;
 }
 
@@ -37,3 +37,8 @@
 .compose .toolbar-button:hover {
   color: #99999c;
 }
+Popover{
+  position: relative;
+  margin-left: 2px;
+}
+
