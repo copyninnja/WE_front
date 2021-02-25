@@ -1,12 +1,9 @@
 import React , {Component}from 'react';
 import ConversationList from '../ConversationList';
-import MessageList from '../MessageList';
 import './Messenger.css';
-import { connect } from 'react-redux';
-
   class  Messenger extends Component{
 
-    render(){
+    render(){  
     return (
       <div className="messenger">
         <div className="scrollable sidebar">
@@ -19,4 +16,4 @@ import { connect } from 'react-redux';
     )
 }
   }
-  export default (Messenger)
+  export default  (Messenger)

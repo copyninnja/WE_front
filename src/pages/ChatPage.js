@@ -1,4 +1,4 @@
-import Messenger from '../components/CHAT/Messenger';
+import MessengerCompose from '../components/CHAT/MessengerCompose';
 import React, { Component }   from "react";
 import { connect } from 'react-redux'
 
@@ -8,10 +8,9 @@ class ChatPage extends Component{
 
 
     render(){
-        console.log(this.props)
         return(
             <div className="App">
-            <Messenger/>
+            <MessengerCompose props={this.props}/>
             </div>
         )
 
@@ -19,6 +18,6 @@ class ChatPage extends Component{
 }
 
 export default connect(
-    state => ({ user: state.user, unReadCount: state.chatMsgList.unReadCount }),
-    {  }
+    state => ({ user: state.user, chat: state.chatMsgList }),
+    {}
   )(ChatPage)

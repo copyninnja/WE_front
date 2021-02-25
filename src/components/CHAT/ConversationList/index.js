@@ -42,6 +42,7 @@ function getLastMsgs (chatMsgs, userId) {
     }
   })
   // 得到所有的lastMsg组成的数组
+  
   const lastMsgs = Object.values(lastMsgObjs)
   // 对数组进行排序（按照create_time）
   lastMsgs.sort(function (m1, m2) {
@@ -56,8 +57,10 @@ class ConversationList extends Component{
   render () {
     const { user } = this.props
     const { users, chatMsgs } = this.props.chat
+    // console.log(this.props.chat)
 
     // 对chatMsgs根据chat_id进行分组
+    console.log(chatMsgs[0],chatMsgs[1])
     const lastLists = getLastMsgs(chatMsgs, user._id)
 
 //  const getConversations = () => {
@@ -95,6 +98,7 @@ class ConversationList extends Component{
           if (msg.unReadCount > 99) {
             msg.unReadCount = 99 + '+'
           }
+          console.log("msg._id"+msg._id)
           return (
             <ConversationListItem
               time={fromTime}

@@ -7,8 +7,6 @@ import moment from 'moment';
 import { sendMsg, readMsg } from '../../../redux/actions'
 import { connect } from 'react-redux';
 import './MessageList.css';
-
-const MY_USER_ID='1'
 class  MessageList extends Component{
 
   state = {
@@ -23,7 +21,7 @@ class  MessageList extends Component{
       '🎅',      '🏃',      '🌂',      '👣',      '👙',      '👠',      '💄',      '🎒',      '👓',      '☂️',      '👯',
       '👕',      '👰',      '👮',      '🙋',      '👴',      '🙌',      '👏'    ]
     this.emojis = this.emojis.map(value => ({ text: value }))
-    console.log(this.props);
+
 
     // console.log(this.emojis)
   }
@@ -35,9 +33,9 @@ class  MessageList extends Component{
     // 发送请求更新消息的未读状态
   }
   componentWillUnmount () {
-    const readId = this.props.match.params.userId //接收消息的用户id
-    const userId = this.props.user._id // 自己的id
-    this.props.readMsg(readId, userId)
+    const readId = this.props.props.props.match.params.userId //接收消息的用户id
+    const userId = this.props.props.props.user._id // 自己的id
+    this.props.props.props.readMsg(readId, userId)
   }
 
   componentDidUpdate () {
@@ -46,11 +44,11 @@ class  MessageList extends Component{
   }
     // 点击发送消息
     send = () => {
-      const from = this.props.user._id
-      const to = this.props.match.params.userId
+      const from = this.props.props.props.user._id
+      const to = this.props.props.props.match.params.userId
       const content = this.state.content.trim()
       if (content) {
-        this.props.sendMsg({ from, to, content })
+        this.props.props.props.sendMsg({ from, to, content })
         this.setState({ content: '' })
       }
     }
@@ -75,17 +73,18 @@ class  MessageList extends Component{
    
  
 
-   renderMessages = (messages) => {
+   renderMessages = (MY_USER_ID,messages,targetIcon,myIcon) => {
     let i = 0;
     let messageCount = messages.length;
+    console.log("messageCount"+messages)
     let tempMessages = [];
 
     while (i < messageCount) {
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.author === MY_USER_ID;
-      let currentMoment = moment(current.timestamp);
+      let isMine = current.from === MY_USER_ID;
+      let currentMoment = moment(current.create_time);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
       let startsSequence = true;
@@ -93,9 +92,9 @@ class  MessageList extends Component{
       let showTimestamp = true;
 
       if (previous) {
-        let previousMoment = moment(previous.timestamp);
+        let previousMoment = moment(previous.create_time);
         let previousDuration = moment.duration(currentMoment.diff(previousMoment));
-        prevBySameAuthor = previous.author === current.author;
+        prevBySameAuthor = previous.from === current.from;
         
         if (prevBySameAuthor && previousDuration.as('hours') < 1) {
           startsSequence = false;
@@ -107,17 +106,19 @@ class  MessageList extends Component{
       }
 
       if (next) {
-        let nextMoment = moment(next.timestamp);
+        let nextMoment = moment(next.create_time);
         let nextDuration = moment.duration(nextMoment.diff(currentMoment));
-        nextBySameAuthor = next.author === current.author;
+        nextBySameAuthor = next.from === current.from;
 
         if (nextBySameAuthor && nextDuration.as('hours') < 1) {
           endsSequence = false;
         }
       }
-
+      console.log(current.content)
       tempMessages.push(
         <Message
+        targetIcon={targetIcon}
+        myIcon={myIcon}
           key={i}
           isMine={isMine}
           startsSequence={startsSequence}
@@ -134,29 +135,32 @@ class  MessageList extends Component{
   }
 
 render () {
-  const { user } = this.props
+  console.log(this.props.props.props);
+  console.log(this.state)
+  const MY_USER_ID = this.props.props.props.user._id // 自己的id
+  const  user  = this.props.props.props.user
     // 我自己的头像
     const myIcon = user.header
-      ? require(`../../../assets/images/${user.header}.png`).default
+      ? require(`../../../assets/images/${user.header}.png`)
       : null
-    const { users, chatMsgs } = this.props.chat
+    const { users, chatMsgs } = this.props.props.props.chat
     // 计算当期聊天的chatId
     const meId = user._id
     if (!users[meId]) {
       //如果没有获取到数据，直接什么显示都不展示
       return null
     }
-    const targetId = this.props.match.params.userId
+    const targetId = this.props.props.props.match.params.userId
     const chatId = [meId, targetId].sort().join('_') //生成当前聊天的chat_id  然后和后台保存的chat_id进行比较，过滤用户
     // 展示当前用户的消息 需要对chatMsgs进行过滤
-    // console.log('this.props.chat',this.props.chat);
-    const msgs = chatMsgs.filter(msg => msg.chat_id === chatId)
+    // console.log('this.props.props.props.chat',this.props.props.props.chat);
+    const msgs = chatMsgs.filter(msg => msg.chat_id === chatId).sort((a, b) => a.create_time < b.create_time ? 1 : -1)
     console.log('msgs',msgs);
 
     // 得到目标对象的头像
     const { header, username } = users[targetId]
     const targetIcon = header
-      ? require(`../../../assets/images/${header}.png`).default
+      ? require(`../../../assets/images/${header}.png`)
       : null
 
     return(
@@ -170,7 +174,7 @@ render () {
           ]}
         />
 
-        <div className="message-list-container">{this.renderMessages(msgs)}</div>
+        <div className="message-list-container">{this.renderMessages(MY_USER_ID,msgs,targetIcon,myIcon)}</div>
 
         <Compose rightItems={[
           <ToolbarButton key="photo" icon="ion-ios-camera" />,

@@ -20,7 +20,7 @@ import StoryPage from '../pages/StoryPage'
 import personalinfo from '../pages/personalinfo'
 import organizationinfo from '../pages/organizationinfo';
 import ChatPage from './ChatPage';
-import Chat from '../components/CHAT/MessengerCompose'
+import Chat from '../components/CHAT/Messenger'
 
 class Main extends Component {
   constructor () {
@@ -116,8 +116,8 @@ class Main extends Component {
           <Route  path="/shop" component={ShopList} />
           <Route  path="/personal" component={StoryPage} />
           <Route exact path="/story" component={StoryPage} />
-          <Route exact path="/chat" component={ChatPage} />
-          <Route path='/chat/:userId' component={Chat}>
+          <Route exact path="/chat" component={Chat} />
+          <Route path='/chat/:userId' component={ChatPage}>
 
           </Route>
         <Redirect to={path} />

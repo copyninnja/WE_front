@@ -10,12 +10,11 @@ class ConversationListItem extends Component {
 
 
 render(){
-  console.log(this.props)
   shave('.conversation-snippet', 20);
     const  photo = require(`../../../assets/images/${this.props.header}.png`)
     return (
-      <div className="conversation-list-item"  onClick={() => this.props.history.push(`/chat/${this.props.targetId}`)}
-      >
+      <Link to={`/chat/${this.props.targetId}`}>
+      <div className="conversation-list-item">
        <Badge count={this.props.count}>
         <img className="conversation-photo" src={photo} alt="conversation" />
         </Badge>
@@ -26,6 +25,7 @@ render(){
         <p className="conversation-time">{this.props.time}</p>
         
       </div>
+      </Link>
     );
 }
 }
