@@ -19,7 +19,7 @@ class  MessageList extends Component{
   componentWillUnmount () {
     const readId = this.props.props.props.match.params.userId //接收消息的用户id
     const userId = this.props.props.props.user._id // 自己的id
-    this.props.props.props.readMsg(readId, userId)
+    readMsg(readId, userId)
   }
 
   componentDidUpdate () {
@@ -118,7 +118,7 @@ render () {
     const chatId = [meId, targetId].sort().join('_') //生成当前聊天的chat_id  然后和后台保存的chat_id进行比较，过滤用户
     // 展示当前用户的消息 需要对chatMsgs进行过滤
     // console.log('this.props.props.props.chat',this.props.props.props.chat);
-    const msgs = chatMsgs.filter(msg => msg.chat_id === chatId).sort((a, b) => a.create_time < b.create_time ? 1 : -1)
+    const msgs = chatMsgs.filter(msg => msg.chat_id === chatId).sort((a, b) => a.create_time > b.create_time ? 1 : -1)
     console.log('msgs',msgs);
 
     // 得到目标对象的头像
@@ -147,12 +147,14 @@ render () {
           <ToolbarButton key="money" icon="ion-ios-card" />,
           <ToolbarButton key="games" icon="ion-logo-game-controller-b" />,
           <ToolbarButton key="emoji" icon="ion-ios-happy" />
-        ]}
+        ]
+      }
         state={this.state}
         setState={this.setState}
         send={this.send}
         toggleShow={this.toggleShow}
         emojis={this.emojis}
+        props={this.props}
         />
       </div>
     );

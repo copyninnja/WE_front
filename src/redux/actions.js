@@ -199,10 +199,9 @@ export const getUserList = type => {
 }
 // 发送消息的异步action
 export const sendMsg = ({ from, to, content }) => {
-  return dispatch => {
     console.log('客发服务发送消息', from, to, content)
     io.socket.emit('sendMsg', { from, to, content })
-  }
+ 
 }
 // 读取消息的异步action
 export const readMsg = (from,to) => {

@@ -21,11 +21,11 @@ class Compose extends Component{
   }
       // 点击发送消息
       send = () => {
-        const from = this.props.props.props.user._id
-        const to = this.props.props.props.match.params.userId
+        const from = this.props.props.props.props.user._id
+        const to = this.props.props.props.props.match.params.userId
         const content = this.state.content.trim()
         if (content) {
-          this.props.props.props.sendMsg({ from, to, content })
+          sendMsg({ from, to, content })
           this.setState({ content: '' })
         }
       }
@@ -45,9 +45,9 @@ class Compose extends Component{
       <div className="compose">
                    <Popover content={headerList.map((row, ri) => (
                   <Row key={ri} className="emoji" >
-                  {row.map(cellId => <Col span={6} key={cellId.text} id={cellId.text}  onClick={item => {
-                this.setState({ content: this.state.content + item })
-              }}>{cellId.text}</Col>)}
+                  {row.map(cellId => <Col span={6} key={cellId.text} id={cellId.text}  onClick={()=>
+                this.setState({ content:  this.state.content + cellId.text })
+              }>{cellId.text}</Col>)}
                    </Row>
                   ))} title="emojis" trigger="click" >
                   <span>😉</span>
@@ -58,15 +58,10 @@ class Compose extends Component{
           className="compose-input"
           placeholder="Type a message"
           value={this.state.content}
-          onFocus={() => {
-            this.setState({ isShow: false })
-          }}
           onChange={val => {
-            this.setState({ content: val })
+            this.setState({ content: val.target.value })
           }}
-        />
-
-             
+        />             
               <span onClick={() => this.send()}>send</span>
 
 
