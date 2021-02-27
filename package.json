@@ -49,6 +49,7 @@
     "file-loader": "6.1.1",
     "firebase": "^8.0.1",
     "fs-extra": "^9.0.1",
+    "google-map-react": "^2.1.9",
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
     "istanbul-lib-coverage": "^3.0.0",
