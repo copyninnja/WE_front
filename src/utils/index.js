@@ -13,13 +13,13 @@
 export function setPath (type, header) {
   let path
   if (type === 'personal') {
-    path= '/personal'
+    path= '/story'
   } else {
-    path= '/organization'
+    path= '/story'
   }
 
   if (!header) {
-    path=path + 'info'
+    path=type+'info'
   }
 
   return path

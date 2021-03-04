@@ -21,8 +21,8 @@ import personalinfo from '../pages/personalinfo'
 import organizationinfo from '../pages/organizationinfo';
 import ChatPage from './ChatPage';
 import Chat from '../components/CHAT/Messenger';
-import writePage from './WriteStory'
-
+import MAP from './MAP'
+import WriteStory from './WriteStoryPage';
 
 class Main extends Component {
   constructor () {
@@ -116,10 +116,10 @@ class Main extends Component {
           <Route  path="/personalinfo" component={personalinfo} />
           <Route  path="/organizationinfo" component={organizationinfo} />
           <Route  path="/shop" component={ShopList} />
-          <Route  path="/personal" component={StoryPage} />
-          <Route exact path="/story" component={StoryPage} />
+          <Route  path="/story" component={StoryPage} />
+          <Route exact path="/writestory" component={WriteStory} />
           <Route exact path="/chat" component={Chat} />
-          <Route exact path="/writePage" component={writePage} />
+          <Route exact path="/MAP" component={MAP} />
           <Route path='/chat/:userId' component={ChatPage}>
 
           </Route>

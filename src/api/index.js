@@ -23,3 +23,7 @@ export const reqReadMsg=(from)=>ajax('/api/msglist/readmsg',{from},"POST")
 
 // 按需搜索用户
 export const reqSearchPeo=({type,xueliArrays})=>ajax('/api/searchPeopel',{type,xueliArrays},"POST")
+
+
+export const  reqWriteStory=(props)=>ajax('/api/nearby',{props},"POST")
+
