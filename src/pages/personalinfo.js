@@ -19,6 +19,7 @@ import { Option } from 'rc-select';
 import DatePicker from 'react-date-picker';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
+import { Slider } from 'antd';
 
 const styles=(theme)=>({
   paper: {
@@ -47,12 +48,24 @@ class Personalinfo extends Component {
       age:new Date(),
       gender:'',
       sport: [],
-      detail: ''
+      detail: '',
+      acceptDistance:''
     }
   }
 
   render () {
-      const sports=['badminton','football','basketball','running'];
+    const sports=['badminton','football','basketball','running'];
+    const marks = {
+      0: '10km',
+      20: '20km',
+      50: '50km',
+      100: {
+        style: {
+          color: '#f50',
+        },
+        label: <strong>&gt;100km</strong>,
+      },
+    };
     const {header,type}=this.props
     if (header) {
       //记得改回来!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -114,7 +127,9 @@ class Personalinfo extends Component {
     </div>
     </div>
   </FormControl>
-         
+  <p>choose maximum distance of story you would like to receive</p>
+  <Slider marks={marks} step={10} defaultValue={50}  onChange={val => this.handleChange('acceptDistance', val)}
+/>
            <TextField
            variant="outlined"
            margin="normal"
