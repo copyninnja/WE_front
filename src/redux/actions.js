@@ -8,7 +8,7 @@ import {
   reqUserList,
   reqChatMsgList,
   reqReadMsg,
-  reqSearchPeo
+  reqSearchPeo,
 } from '../api/index'
 
 import {
@@ -19,7 +19,7 @@ import {
   RECEIVE_USERLIST,
   RECEIVE_MSG_LIST,
   RECEIVE_MSG_ONE,
-  READ_MSG
+  READ_MSG,
 } from './action-types'
 
 
@@ -98,6 +98,8 @@ const readMsgs = ({count,from,to}) => ({
   type: READ_MSG,
   data: {count,from,to}
 })
+
+
 // 注册异步action
 export const register = ({username, email, password, password2, type }) => {
   console.log("开始注册")
