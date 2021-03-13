@@ -1,5 +1,4 @@
 import React ,{useContext}  from "react";
-import {AuthContext} from '../contexts/authContext';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -55,11 +54,9 @@ const useStyles = makeStyles((theme) => ({
   export default function FindPassword() {
     const classes = useStyles();
     const {register,handleSubmit}= useForm();
-    const context = useContext(AuthContext);
 
     
     const regis= props =>{
-      context.register(props.email,props.password);
      
   }
   const [activeStep, setActiveStep] = React.useState(0);

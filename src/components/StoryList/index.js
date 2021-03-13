@@ -1,7 +1,10 @@
-import React from 'react';
+import React , { Component }from 'react';
 import 'antd/dist/antd.css';
 import { List, Avatar, Space } from 'antd';
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
+import {getStory} from '../../redux/actions'
+import { connect } from 'react-redux'
+import compose from 'recompose/compose';
 
 const listData = [];
 for (let i = 1; i < 23; i++) {
@@ -23,7 +26,18 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 
-export default function CardList() {
+class CardList extends Component {
+  constructor () {
+    super()
+  }
+  componentDidMount(){
+
+  }
+
+render(){
+
+  console.log(this.props.story)
+
     return(
       <List
     itemLayout="vertical"
@@ -67,3 +81,6 @@ export default function CardList() {
   />
     )
     }
+  }
+
+  export default compose(connect( state => ({ user: state.user, story:state.story }), {})) (CardList)

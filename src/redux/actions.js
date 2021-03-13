@@ -9,6 +9,7 @@ import {
   reqChatMsgList,
   reqReadMsg,
   reqSearchPeo,
+  reqStoryList
 } from '../api/index'
 
 import {
@@ -20,6 +21,7 @@ import {
   RECEIVE_MSG_LIST,
   RECEIVE_MSG_ONE,
   READ_MSG,
+  RECEIVE_STORYLIST
 } from './action-types'
 
 
@@ -97,6 +99,11 @@ const receiveMsgOne = ({chatMsg,userId}) => ({
 const readMsgs = ({count,from,to}) => ({
   type: READ_MSG,
   data: {count,from,to}
+})
+//接受story
+const receiveStoryList = storylist => ({
+  type: RECEIVE_STORYLIST,
+  data: storylist
 })
 
 
@@ -226,6 +233,19 @@ export const getXueLiPeo=({type,xueliArrays})=>{
     if (res.code===0) {
       // 分发成功的同步action
       dispatch(receiveUserList(res.data))
+    }
+  }
+}
+
+//获取附近的故事
+export const getStory= ({username,location}) =>{
+  return async dispatch=>{
+    const response=await reqStoryList({username:username,location:location})
+    console.log(response.data)
+    const res=response.data
+    if (res.code===0) {
+      // 分发成功的同步action
+      dispatch(receiveStoryList(res.data))
     }
   }
 }

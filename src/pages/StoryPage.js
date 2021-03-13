@@ -10,7 +10,7 @@ const HomePage = () => {
     <div>
 
     <Link to="/writestory"><Button variant="contained">Write your story<AddIcon className="fa fa-plus-circle" color="secondary" /></Button></Link>
-
+    
     <StoryList/>
     </div>
   );

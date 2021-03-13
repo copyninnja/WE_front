@@ -9,7 +9,8 @@ import {
   RECEIVE_USERLIST,
   RECEIVE_MSG_LIST,
   RECEIVE_MSG_ONE,
-  READ_MSG
+  READ_MSG,
+  RECEIVE_STORYLIST
 } from './action-types'
 import { setPath } from '../utils/index'
 
@@ -84,5 +85,23 @@ function chatMsgList (state = initChat, action) {
       return state
   }
 }
+const initStory = {
+  username: '', //用户名
+  type: '', //用户类型
+  content: '', //内容
+  tag: '' ,//标签
+  Img:'',//配图
+  location:'',//位置
+  time:''//日期
+}
+// 产生user状态的reducer
+function story (state = initStory, action) {
+  switch (action.type) {
+    case RECEIVE_STORYLIST: //data是story
+      return action.data
+    default:
+      return state
+  }
+}
 //返回合并后的reducer函数
-export default combineReducers({ user, userlist, chatMsgList })
+export default combineReducers({ user, userlist, chatMsgList,story })

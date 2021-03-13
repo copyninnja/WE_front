@@ -52,7 +52,7 @@ export default  function WriteStory(props) {
     sport:[],
     img:[],
     anonymous:false,
-    location:''
+    location:[]
   });
   const user = useSelector(state => state.user)
 
@@ -78,13 +78,13 @@ export default  function WriteStory(props) {
     story.img = combined
   }
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position)=> {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      }; 
-     story.location=pos;   
-  });
+    navigator.geolocation.getCurrentPosition((position) => {
+      var pos = [
+        position.coords.longitude,
+        position.coords.latitude
+      ];
+      story.location = pos;
+    });
 }
 // console.log(user)
     if(!story.anonymous){

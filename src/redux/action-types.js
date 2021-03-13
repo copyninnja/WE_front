@@ -8,5 +8,5 @@ export const RECEIVE_USERLIST='RECEIVE_USERLIST'   //获取用户列表
 export const RECEIVE_MSG_LIST='RECEIVE_MSG_LIST'   //获取消息列表，获取所有相关消息列表
 export const RECEIVE_MSG_ONE='RECEIVE_MSG_ONE'   //接收一条消息
 export const READ_MSG='READ_MSG'   //查看某个聊天消息
-export const GET_STORY='GET_STORY'   //找story
+export const RECEIVE_STORYLIST='RECEIVE_STORYLIST'   //找story
 

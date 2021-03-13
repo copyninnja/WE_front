@@ -23,7 +23,7 @@ import ChatPage from './ChatPage';
 import Chat from '../components/CHAT/Messenger';
 import MAP from './MAP'
 import WriteStory from './WriteStoryPage';
-
+import {getStory} from '../redux/actions'
 class Main extends Component {
   constructor () {
     super()
@@ -70,6 +70,16 @@ class Main extends Component {
       // 发送异步请求，获取user
       this.props.getUser()
     }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        var pos = [
+          position.coords.longitude,
+          position.coords.latitude
+        ];
+        this.props.getStory({username:this.props.user.username,location:pos});
+  console.log(this.props.user)
+      });
+  }
   }
   render () {
     /**
@@ -83,8 +93,9 @@ class Main extends Component {
      *
      */
     //  路由跳转情况1：没有userId，直接跳转到login页面
+
     const userId = Cookies.get('userId')
-    const { unReadCount } = this.props
+
     if (!userId) {
 
       return <Redirect to={'/login'} />
@@ -97,6 +108,7 @@ class Main extends Component {
 
       let path = this.props.location.pathname
       if (path == '/'){
+        
         path = setPath(this.props.user.type, this.props.user.header)
       }
     //   const { navList } = this
@@ -110,6 +122,7 @@ class Main extends Component {
     //       this.navList[1].hide = true
     //     }
     //   }
+
       return (
         <div>
           <Switch>
@@ -133,6 +146,6 @@ class Main extends Component {
 }
 
 export default connect(
-  state => ({ user: state.user, unReadCount: state.chatMsgList.unReadCount }),
-  { getUser }
+  state => ({ user: state.user, unReadCount: state.chatMsgList.unReadCount,story:state.story }),
+  { getUser,getStory }
 )(Main)
