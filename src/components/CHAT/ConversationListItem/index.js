@@ -11,7 +11,7 @@ class ConversationListItem extends Component {
 
 render(){
   shave('.conversation-snippet', 20);
-    const  photo = require(`../../../assets/images/${this.props.header}.png`)
+    const  photo = require(`../../../assets/images/${this.props.header}`)
     return (
       <Link to={`/chat/${this.props.targetId}`}>
       <div className="conversation-list-item">

@@ -105,7 +105,7 @@ render () {
   const  user  = this.props.props.props.user
     // 我自己的头像
     const myIcon = user.header
-      ? require(`../../../assets/images/${user.header}.png`)
+      ? require(`../../../assets/images/${user.header}`)
       : null
     const { users, chatMsgs } = this.props.props.props.chat
     // 计算当期聊天的chatId
@@ -124,7 +124,7 @@ render () {
     // 得到目标对象的头像
     const { header, username } = users[targetId]
     const targetIcon = header
-      ? require(`../../../assets/images/${header}.png`)
+      ? require(`../../../assets/images/${header}`)
       : null
 
     return(

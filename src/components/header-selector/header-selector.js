@@ -64,7 +64,7 @@ export default class HeaderSelector extends Component {
       row=[];
       for(let j = 1; j < 5; j++){
       row.push({
-        text:'头像'+((i-1)*4+j),
+        text:'头像'+((i-1)*4+j)+'.png',
         icon:require(`../../assets/images/头像${(i-1)*4+j}.png`)
       })    
     }

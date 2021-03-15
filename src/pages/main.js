@@ -27,60 +27,38 @@ import {getStory} from '../redux/actions'
 class Main extends Component {
   constructor () {
     super()
-    this.state = {}
+    this.state = {
+      props:{longti:'',lat:''}
+    }
   }
-  // 给组件对象添加属性
-//   navList = [
-//     //包含所有导航组件的相关属性信息
-//     {
-//       path: '/shuaige', // 路由路径
-//       component: ShuaiGe,
-//       title: '美女列表',
-//       icon: 'meinv',
-//       text: '美女'
-//     },
-//     {
-//       path: '/meinv', // 路由路径
-//       component: MeiNv,
-//       title: '帅哥列表',
-//       icon: 'shuaige',
-//       text: '帅哥'
-//     },
-//     {
-//       path: '/message', // 路由路径
-//       component: Message,
-//       title: '消息列表',
-//       icon: 'message',
-//       text: '消息'
-//     },
-//     {
-//       path: '/personal', // 路由路径
-//       component: Personal,
-//       title: '用户中心',
-//       icon: 'personal',
-//       text: '个人'
-//     }
-//   ]
+
   // 生命周期函数
-  componentDidMount () {
+  componentWillMount () {
     // 曾经登录过（cookie中有userId），但是现在还没登录（reducer中有userId的数据），如果cookie中有userId，发送请求获取对应的user
     const userId = Cookies.get('userId')
 
     if (userId && !this.props.user._id) {
       // 发送异步请求，获取user
       this.props.getUser()
+      
     }
-    if (navigator.geolocation) {
+
+  }
+  componentDidMount(){
+    if (navigator.geolocation&&this.props.user.username!='') {
       navigator.geolocation.getCurrentPosition((position) => {
         var pos = [
-          position.coords.longitude,
-          position.coords.latitude
+          Math.floor(position.coords.longitude*10000000)/10000000,
+          Math.floor(position.coords.latitude*10000000)/10000000
         ];
+        this.setState({longti:pos[0],lat:pos[1]})
         this.props.getStory({username:this.props.user.username,location:pos});
-  console.log(this.props.user)
+        console.log(this.props.user)
       });
   }
   }
+
+
   render () {
     /**
      * 实现自动登录的条件
@@ -105,11 +83,22 @@ class Main extends Component {
     if (!this.props.user._id) {
       return null
     } else {
-
+      
       let path = this.props.location.pathname
       if (path == '/'){
-        
-        path = setPath(this.props.user.type, this.props.user.header)
+        console.log(this.props.user)
+      //   if (navigator.geolocation&&this.props.user.username!='') {
+      //     navigator.geolocation.getCurrentPosition((position) => {
+      //       var pos = [
+      //         Math.floor(position.coords.longitude*10000000)/10000000,
+      //         Math.floor(position.coords.latitude*10000000)/10000000
+      //       ];
+      //       this.props.getStory({username:this.props.user.username,location:pos});
+      //       console.log(this.props.user)
+      //     });
+      // }
+      path = setPath(this.props.user.type, this.props.user.header)
+
       }
     //   const { navList } = this
     //   const routePath = this.props.location.pathname

@@ -80,8 +80,8 @@ export default  function WriteStory(props) {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
       var pos = [
-        position.coords.longitude,
-        position.coords.latitude
+        Math.floor(position.coords.longitude*10000000)/10000000,
+        Math.floor(position.coords.latitude*10000000)/10000000
       ];
       story.location = pos;
     });
