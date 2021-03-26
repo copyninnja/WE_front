@@ -44,19 +44,19 @@ class Main extends Component {
     }
 
   }
-  componentDidMount(){
-    if (navigator.geolocation&&this.props.user.username!='') {
-      navigator.geolocation.getCurrentPosition((position) => {
-        var pos = [
-          Math.floor(position.coords.longitude*10000000)/10000000,
-          Math.floor(position.coords.latitude*10000000)/10000000
-        ];
-        this.setState({longti:pos[0],lat:pos[1]})
-        this.props.getStory({username:this.props.user.username,location:pos});
-        console.log(this.props.user)
-      });
-  }
-  }
+  // componentDidMount(){
+  //   if (navigator.geolocation&&this.props.user.username!='') {
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       var pos = [
+  //         Math.floor(position.coords.longitude*10000000)/10000000,
+  //         Math.floor(position.coords.latitude*10000000)/10000000
+  //       ];
+  //       this.setState({longti:pos[0],lat:pos[1]})
+  //       this.props.getStory({username:this.props.user.username,location:pos});
+  //       console.log(this.props.user)
+  //     });
+  // }
+  // }
 
 
   render () {

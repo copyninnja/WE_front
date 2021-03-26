@@ -29,4 +29,7 @@ export const reqWriteStory=(props)=>ajax('/api/nearby',{props},"POST")
 
 export const reqStoryList=(props)=>ajax('/api/nearby/story',{props},"POST")
 
+export const reqSubscribe=(props)=>ajax('/api/users/subscription',{props},"POST")
+
+    
 

@@ -9,7 +9,8 @@ import {
   reqChatMsgList,
   reqReadMsg,
   reqSearchPeo,
-  reqStoryList
+  reqStoryList,
+  reqSubscribe
 } from '../api/index'
 
 import {
@@ -21,7 +22,9 @@ import {
   RECEIVE_MSG_LIST,
   RECEIVE_MSG_ONE,
   READ_MSG,
-  RECEIVE_STORYLIST
+  RECEIVE_STORYLIST,
+  RECEIVE_SUBSCRIPTION,
+  RECEIVE_MATCH
 } from './action-types'
 
 
@@ -105,7 +108,16 @@ const receiveStoryList = storylist => ({
   type: RECEIVE_STORYLIST,
   data: storylist
 })
-
+// 接收订阅结果
+const receivSubscription = msg => ({
+  type: RECEIVE_SUBSCRIPTION,
+  data: msg
+})
+// 接收订阅结果
+const receivMatch = (msg,from,to) => ({
+  type: RECEIVE_MATCH,
+  data: {msg,from,to}
+})
 
 // 注册异步action
 export const register = ({username, email, password, password2, type }) => {
@@ -247,5 +259,23 @@ export const getStory= ({username,location}) =>{
       // 分发成功的同步action
       dispatch(receiveStoryList(res.data))
     }
+  }
+}
+
+// 发送订阅
+export const sendSubscribe = ({from,to}) => {
+  return async dispatch => {
+    const response = await reqSubscribe({from:from,to:to})
+    const res = response.data
+    console.log(res)
+    if (res.code === 0) {
+      // 分发成功的同步action
+      dispatch(receivMatch(res.msg,res.from,res.to.username));
+    } else if(res.code === 1) {
+      // 分发失败的同步action
+      dispatch(receivSubscription(res.msg))
+
+
+    };
   }
 }

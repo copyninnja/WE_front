@@ -9,4 +9,10 @@ export const RECEIVE_MSG_LIST='RECEIVE_MSG_LIST'   //获取消息列表，获取
 export const RECEIVE_MSG_ONE='RECEIVE_MSG_ONE'   //接收一条消息
 export const READ_MSG='READ_MSG'   //查看某个聊天消息
 export const RECEIVE_STORYLIST='RECEIVE_STORYLIST'   //找story
+export const RECEIVE_SUBSCRIPTION='RECEIVE_SUBSCRIPTION'   //找story
+export const RECEIVE_MATCH='RECEIVE_MATCH'   //找story
+
+
+
+
 

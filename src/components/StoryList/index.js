@@ -1,23 +1,17 @@
 import React , { Component }from 'react';
 import 'antd/dist/antd.css';
 import { List, Avatar, Space } from 'antd';
-import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
+import { MessageOutlined, LikeOutlined, PlusOutlined } from '@ant-design/icons';
 import {getStory} from '../../redux/actions'
 import { connect } from 'react-redux'
 import compose from 'recompose/compose';
 import { distanceCal } from '../../util';
+import AddIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
+import {sendSubscribe} from '../../redux/actions';
+import StoryButton from '../StoryButton'
+import Item from 'antd/lib/list/Item';
 let listData = [];
-// for (let i = 1; i < 23; i++) {
-//   listData.push({
-//     href: 'https://ant.design',
-//     title: ` ${i}`,
-//     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-//     description:
-//       '<10km',
-//     content:
-//       'This is a test of the content of each user`s content',
-//   });
-// }
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -31,6 +25,7 @@ class CardList extends Component {
     super()
     this.state={
       distance:[],
+      subscribed:[]
 
   }
     
@@ -46,7 +41,6 @@ calculate=(lat,longti)=>{
     // console.log(dis)
     if(dis){   
     this.setDistance(dis)
-    console.log(this.state.distance)
     return dis;}
     else{
       this.setDistance(5)
@@ -62,6 +56,18 @@ setDistance = dis => {
     distance:newFris
   })
 }
+subscribe = (username, e) => {
+  e.target.disabled = true;
+  this.state.subscribed.push(username)
+  const from = this.props.user.username
+  const to = username
+  if (username != "anonymose") {
+    // this.props.sendMsg({ from, to, content })
+    // this.setState({ content: '' })
+    this.props.sendSubscribe({from:from, to:to})
+  }
+}
+
 componentWillMount(){
   if (navigator.geolocation&&this.props.user.username!='') {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -74,6 +80,7 @@ componentWillMount(){
 }
 }
 componentDidUpdate(prevProps){
+  // console.log(prevProps,this.props)
   let a = []
   if(this.props.story.location!==prevProps.story.location){
     for (var i in this.props.story) {
@@ -89,25 +96,22 @@ componentDidUpdate(prevProps){
       let j=0
       listData=[];
     for (var i in this.props.story) {
-    listData.push({
-      key:`${i}`,
-      title: `${this.props.story[i].username}`,
-      avatar: require(`../../assets/images/${this.props.story[i].header}`),
-      description:
-        '<'+this.state.distance[j]+'km',
-      content:
-        `${this.props.story[i].content}`,
-    });
-    console.log(this.props.story[i].header)
-  }
+      listData.push({
+        key: `${i}`,
+        title: `${this.props.story[i].username}`,
+        avatar: require(`../../assets/images/${this.props.story[i].header}`),
+        description: '<' + this.state.distance[j] + 'km',
+        content: `${this.props.story[i].content}`,
+        img:this.props.story[i].Img[j]?this.props.story[i].Img:null
+      });
+
+    }
   }
 }
-// componentDidUpdate(prevState){
 
-// }
 
 render(){
-  console.log(this.props.story)
+ const subs=this.props.user
     return(
       <List
     itemLayout="vertical"
@@ -125,19 +129,35 @@ render(){
       </div>
     }
     renderItem={item => (
-      <List.Item
+ <List.Item
         key={item.key}
-        actions={[
-          <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
+        actions={subs.subscribe.includes(item.title)||item.title===subs.username ?
+          [
+          // <IconText icon={PlusOutlined} text="subscribe" key="list-vertical-star-o" />,
+          <Button disabled variant="contained" color="secondary" key='list-vertical-star-o' ><AddIcon className="fa fa-plus-circle"/>subscribe</Button>,
           <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
           <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-        ]}
+        ]
+      :
+      [
+        // <IconText icon={PlusOutlined} text="subscribe" key="list-vertical-star-o" />,
+        <p id="first">{console.log(item.img)}</p>,
+        <StoryButton username={item.title}/>,
+        // <Button disabled={this.state.subscribed.includes(item.title)} variant="contained" color="secondary" key='list-vertical-star-o' onClick={(e) => this.subscribe(item.title,e)}><AddIcon className="fa fa-plus-circle"/>subscribe</Button>,
+        <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
+        <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+      ]
+      }
+
+        
         extra={
-          <img
-            width={272}
-            alt="logo"
-            src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-          />
+          item.img? 
+          item.img.map((one)=>{
+            return <img src={`/api/upload/public/uploads/${one.backAddd}`}/> 
+          })
+          :
+          <img hidden  width={272}    alt="logo"  src=""          />
+
         }
       >
         <List.Item.Meta
@@ -153,4 +173,4 @@ render(){
     }
   }
 
-  export default compose(connect( state => ({ user: state.user, story:state.story }), {getStory})) (CardList)
+  export default compose(connect( state => ({ user: state.user, story:state.story }), {getStory,sendSubscribe})) (CardList)

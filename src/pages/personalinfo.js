@@ -46,10 +46,10 @@ class Personalinfo extends Component {
     this.state = {
       header: '',
       age:new Date(),
-      gender:'',
+      gender:'male',
       sport: [],
       detail: '',
-      acceptDistance:''
+      acceptDistance:'50'
     }
   }
 
@@ -66,6 +66,7 @@ class Personalinfo extends Component {
         label: <strong>&gt;100km</strong>,
       },
     };
+    //shows farther story
     const {header,type}=this.props
     if (header) {
       //记得改回来!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

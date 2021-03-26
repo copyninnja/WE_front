@@ -10,7 +10,9 @@ import {
   RECEIVE_MSG_LIST,
   RECEIVE_MSG_ONE,
   READ_MSG,
-  RECEIVE_STORYLIST
+  RECEIVE_STORYLIST,
+  RECEIVE_SUBSCRIPTION,
+  RECEIVE_MATCH
 } from './action-types'
 import { setPath } from '../utils/index'
 
@@ -18,7 +20,8 @@ const initUser = {
   username: '', //用户名
   type: '', //用户类型
   msg: '', //错误信息提示
-  redirectTo: '' //需要自动重定向的路由路径
+  redirectTo: '', //需要自动重定向的路由路径
+  friend:[]
 }
 // 产生user状态的reducer
 function user (state = initUser, action) {
@@ -33,6 +36,14 @@ function user (state = initUser, action) {
       return action.data
     case RESET_USER: // data是msg
       return { ...initUser, msg: action.data }
+      case RECEIVE_SUBSCRIPTION:
+        return {...state,msg:action.data}
+      case RECEIVE_MATCH:
+        console.log(action.data)
+        let to1=action.data.to
+        state.friend.push(to1)
+        console.log( {...state,msg:action.data})
+        return  {...state,msg:action.data.msg}
 
     default:
       return state
@@ -69,7 +80,7 @@ function chatMsgList (state = initChat, action) {
         unReadCount: state.unReadCount+(!chatMsg.read&&chatMsg.to===action.data.userId?1:0)
       }
     case READ_MSG:
-      const {count ,from,to} = action.data
+      const {count,from,to} = action.data
       return {
         users: state.users,
         chatMsgs: state.chatMsgs.map(msg=>{
@@ -92,13 +103,14 @@ const initStory = {
   tag: '' ,//标签
   Img:'',//配图
   location:'',//位置
-  time:''//日期
+  time:'',//日期
 }
 // 产生user状态的reducer
-function story (state = initStory, action) {
+function story(state = initStory, action) {
   switch (action.type) {
     case RECEIVE_STORYLIST: //data是story
       return action.data
+
     default:
       return state
   }
