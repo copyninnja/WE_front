@@ -31,5 +31,5 @@ export const reqStoryList=(props)=>ajax('/api/nearby/story',{props},"POST")
 
 export const reqSubscribe=(props)=>ajax('/api/users/subscription',{props},"POST")
 
-    
+// export const reqImg=(img)=>ajax(`/api/upload/public/uploads/${img}`)
 

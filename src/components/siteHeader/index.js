@@ -22,7 +22,7 @@ const SiteHeader = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link text-white" to="./shop">
+            <Link className="nav-link text-white" to="/shop">
               Shop
             </Link>
           </li>

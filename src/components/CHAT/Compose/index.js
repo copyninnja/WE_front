@@ -1,6 +1,6 @@
 import React ,{Component} from 'react';
 import './Compose.css';
-import { sendMsg, readMsg } from '../../../redux/actions'
+import { sendMsg } from '../../../redux/actions'
 import { connect } from 'react-redux';
 import {Row,Col} from 'antd';
 import { Popover, Button } from 'antd';
@@ -70,4 +70,4 @@ class Compose extends Component{
 }
 
 }
-export default connect(state => ({ user: state.user, chat: state.chatMsgList }, { sendMsg, readMsg })) (Compose)
+export default connect(state => ({ user: state.user, chat: state.chatMsgList }, { sendMsg })) (Compose)

@@ -108,6 +108,7 @@ class ConversationList extends Component{
               data={msg.content}
               header={targetUser.header}
               count={msg.unReadCount}
+              userId={user._id}
             />
           )
           }

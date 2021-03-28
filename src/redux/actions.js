@@ -116,7 +116,7 @@ const receivSubscription = msg => ({
 // 接收订阅结果
 const receivMatch = (msg,from,to) => ({
   type: RECEIVE_MATCH,
-  data: {msg,from,to}
+  data: {msg,to}
 })
 
 // 注册异步action
@@ -270,7 +270,7 @@ export const sendSubscribe = ({from,to}) => {
     console.log(res)
     if (res.code === 0) {
       // 分发成功的同步action
-      dispatch(receivMatch(res.msg,res.from,res.to.username));
+      dispatch(receivMatch(res.msg,res.from,res.to));
     } else if(res.code === 1) {
       // 分发失败的同步action
       dispatch(receivSubscription(res.msg))

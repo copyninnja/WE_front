@@ -2,7 +2,8 @@
 import React, { useEffect,useState,useRef } from "react";
 
 import {useSelector, useDispatch} from 'react-redux'
-import {sendSubscribe} from '../../redux/actions';
+import {sendMsg,sendSubscribe} from '../../redux/actions';
+
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import { Modal } from 'antd';
@@ -13,9 +14,11 @@ const StoryButton = (username) => {
         const story = useSelector(state => state.story)
         const dispatch = useDispatch()
         const firstUpdate = useRef(true);
-        const subscribe = (toUser) => {
-            const from = user.username
-            const to = toUser.username
+        let from=user.username;
+        let to=username.username;
+        let content="Let's Chat !!";
+
+        const subscribe = () => {
             if (to != "anonymose") {
               // this.props.sendMsg({ from, to, content })
               // this.setState({ content: '' })
@@ -29,8 +32,15 @@ const StoryButton = (username) => {
               return;
             } else {
               countDown(user.msg)
+              if(user.msg=="it's a Match !"){
+                let to_id=user.friend[user.friend.length-1]._id;
+                let from_id=user._id;
+                console.log(from_id,to_id)
+                sendMsg({from:from_id,to:to_id,content})
+                sendMsg({from:to_id,to:from_id,content})
+              }
             }
-          }, [user]);
+          }, [user.msg]);
 
           const countDown=(msg)=> {
             let secondsToGo = 5;
@@ -51,10 +61,10 @@ const StoryButton = (username) => {
           }
 
         return disabled?(
-            <Button disabled variant="contained" color="secondary" key='list-vertical-star-o' onClick={(e) => subscribe(username)}><AddIcon className="fa fa-plus-circle"/>subscribed successfully</Button>
+            <Button disabled variant="contained" color="secondary" key='list-vertical-star-o' onClick={(e) => subscribe()}><AddIcon className="fa fa-plus-circle"/>subscribed successfully</Button>
 
         ):(
-            <Button variant="contained" color="secondary" key='list-vertical-star-o' onClick={(e) => subscribe(username)}><AddIcon className="fa fa-plus-circle"/>subscribe</Button>
+            <Button variant="contained" color="secondary" key='list-vertical-star-o' onClick={(e) => subscribe()}><AddIcon className="fa fa-plus-circle"/>subscribe</Button>
 
         )
         

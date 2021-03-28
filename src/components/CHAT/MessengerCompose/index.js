@@ -2,7 +2,7 @@ import React , {Component}from 'react';
 import ConversationList from '../ConversationList';
 import MessageList from '../MessageList';
 import './Messenger.css';
-import { sendMsg, readMsg } from '../../../redux/actions'
+import { sendMsg } from '../../../redux/actions'
 import { connect } from 'react-redux';
   class  MessengerCompose extends Component{
     render(){
@@ -22,4 +22,4 @@ import { connect } from 'react-redux';
     );
 }
   }   
-  export default connect(state => ({ user: state.user, chat: state.chatMsgList }, { sendMsg, readMsg })) (MessengerCompose)
+  export default connect(state => ({ user: state.user, chat: state.chatMsgList }, { sendMsg })) (MessengerCompose)

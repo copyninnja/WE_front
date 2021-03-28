@@ -131,7 +131,7 @@ render(){
     renderItem={item => (
  <List.Item
         key={item.key}
-        actions={subs.subscribe.includes(item.title)||item.title===subs.username ?
+        actions={subs.subscribe.includes(item.title)||item.title===subs.username||item.title=="anonymous" ?
           [
           // <IconText icon={PlusOutlined} text="subscribe" key="list-vertical-star-o" />,
           <Button disabled variant="contained" color="secondary" key='list-vertical-star-o' ><AddIcon className="fa fa-plus-circle"/>subscribe</Button>,
@@ -141,7 +141,6 @@ render(){
       :
       [
         // <IconText icon={PlusOutlined} text="subscribe" key="list-vertical-star-o" />,
-        <p id="first">{console.log(item.img)}</p>,
         <StoryButton username={item.title}/>,
         // <Button disabled={this.state.subscribed.includes(item.title)} variant="contained" color="secondary" key='list-vertical-star-o' onClick={(e) => this.subscribe(item.title,e)}><AddIcon className="fa fa-plus-circle"/>subscribe</Button>,
         <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
@@ -153,10 +152,10 @@ render(){
         extra={
           item.img? 
           item.img.map((one)=>{
-            return <img src={`/api/upload/public/uploads/${one.backAddd}`}/> 
+            return <img key={one} width={150} src={`/api/upload/public/uploads/${one.backAddd}`}/> 
           })
           :
-          <img hidden  width={272}    alt="logo"  src=""          />
+          <img hidden  width={150}    alt="logo"  src="" />
 
         }
       >
