@@ -12,7 +12,8 @@ import {
   READ_MSG,
   RECEIVE_STORYLIST,
   RECEIVE_SUBSCRIPTION,
-  RECEIVE_MATCH
+  RECEIVE_MATCH,
+  RECEIVE_PRODUCTLIST
 } from './action-types'
 import { setPath } from '../utils/index'
 
@@ -97,23 +98,34 @@ function chatMsgList (state = initChat, action) {
   }
 }
 const initStory = {
-  username: '', //用户名
-  type: '', //用户类型
-  content: '', //内容
-  tag: '' ,//标签
-  Img:'',//配图
-  location:'',//位置
-  time:'',//日期
+  username: '', 
+  type: '',
+  content: '', 
+  tag: '' ,
+  Img:'',
+  location:'',
+  time:'',
 }
-// 产生user状态的reducer
+// produce a reducer for user
 function story(state = initStory, action) {
   switch (action.type) {
-    case RECEIVE_STORYLIST: //data是story
+    case RECEIVE_STORYLIST: //data is story
       return action.data
 
     default:
       return state
   }
 }
-//返回合并后的reducer函数
-export default combineReducers({ user, userlist, chatMsgList,story })
+const initProduct = []
+function product(state = initProduct, action) {
+  switch (action.type) {
+    case RECEIVE_PRODUCTLIST: //data is product
+      // console.log(action.data)
+      return action.data
+    default:
+      return state
+  }
+}
+
+//return the combined lambda
+export default combineReducers({ user, userlist, chatMsgList,story,product })

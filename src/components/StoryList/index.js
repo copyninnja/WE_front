@@ -20,7 +20,7 @@ const IconText = ({ icon, text }) => (
   </Space>
 );
 
-class CardList extends Component {
+class StoryList extends Component {
   constructor () {
     super()
     this.state={
@@ -155,7 +155,7 @@ render(){
             return <img key={one} width={150} src={`/api/upload/public/uploads/${one.backAddd}`}/> 
           })
           :
-          <img hidden  width={150}    alt="logo"  src="" />
+          <img hidden  width={150} alt="logo" src="sporty.png" />
 
         }
       >
@@ -172,4 +172,4 @@ render(){
     }
   }
 
-  export default compose(connect( state => ({ user: state.user, story:state.story }), {getStory,sendSubscribe})) (CardList)
+  export default compose(connect( state => ({ user: state.user, story:state.story }), {getStory,sendSubscribe})) (StoryList)

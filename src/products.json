@@ -1,0 +1,24 @@
+[{
+    "title": "Nike concept sneaker",
+    "id": "Nike concept sneaker",
+    "description": "Your next generation sneaker. From going bold with your favourite fits or dressed down to create a laid-back vibe, this is one shoe with limitless possibilities.",
+    "price": "2.00",
+    "image": "shoe1.jpg"
+  },
+  {
+    "title": "Fly to future",
+    "id": "Nike concept sneaker2",
+    "description": "Mesh and synthetic materials on the upper keep the fluid look of the OG while adding comfort and durability.",
+    "price": "4.00",
+    "image": "shoe2.jpg"
+
+  },
+  {
+    "title": "Air max 2077",
+    "id": "Nike concept sneaker3",
+    "description": "Originally designed for performance running, the full-length Max Air unit adds soft, comfortable cushioning underfoot.",
+    "price": "8.00",
+    "image": "shoe3.jpg"
+
+  }
+]

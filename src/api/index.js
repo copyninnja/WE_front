@@ -33,3 +33,5 @@ export const reqSubscribe=(props)=>ajax('/api/users/subscription',{props},"POST"
 
 // export const reqImg=(img)=>ajax(`/api/upload/public/uploads/${img}`)
 
+export const reqButter=()=>ajax('https://api.buttercms.com/v2/pages/product/?auth_token=8ed1487bcb8b9f809cdceb5a92b8dee33f127238')
+

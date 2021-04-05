@@ -16,6 +16,9 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import './card.css'
+import ShopButton from '../ShopButton';
+import moment from 'moment'
+import {excerpt} from '../../../util'
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -39,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RecipeReviewCard() {
+export default function ShopCard(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
+  const {time,category,storage,item_url,item_price,item_name,item_image,item_id,item_description,item_custom1_options,item_custom1_color,item_custom2_options,item_custom2_size}=props;
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -51,13 +54,14 @@ export default function RecipeReviewCard() {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //含最大值，含最小值 
   }
+  // console.log(typeof(props.image))
   return (
     <div className="card col-sm-3" >
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            WE
           </Avatar>
         }
         action={
@@ -65,18 +69,20 @@ export default function RecipeReviewCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={item_name}
+        subheader={moment(time).format( "YYYY-MM-DD")}
       />
       <CardMedia
         className={classes.media}
-        image={`shoe${getRandomIntInclusive(1,3)}.jpg`}
-        title="Paella dish"
+        // image={require("../../../assets/product/shoe1.jpg")}
+        image={item_image}
+        // image={`shoe${getRandomIntInclusive(1,3)}.jpg`}
+
+        title={category}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+        {excerpt(item_description)}
         </Typography>
       </CardContent>
 
@@ -101,32 +107,14 @@ export default function RecipeReviewCard() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
+          <Typography paragraph>Description:</Typography>
           <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-          </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
+              {item_description}
           </Typography>
         </CardContent>
       </Collapse>
     </Card>
+    <ShopButton props={props}/>
     </div>
   );
 }

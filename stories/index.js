@@ -5,7 +5,7 @@ import AuContextProvider from "../src/contexts/authContext";
 import { MemoryRouter } from "react-router";
 import SiteHeader from "../src/components/siteHeader";
 import Card from "../src/components/card";
-import CardList from "../src/components/cardList";
+import CardList from "../src/components/SHOP/CardList";
 
 
 storiesOf("Home Page/Card", module)

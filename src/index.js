@@ -14,12 +14,31 @@ import findpassword from './pages/findpasswordPage'
 
 
 const App = () => {
+  const HideOnScroll = () => {
+    const [scroll, setScroll] = React.useState(window.scrollY);
+    const [visible, setVisible] = React.useState(false)
+    React.useEffect(() => {
+        const onScroll = () => {
+            setVisible(window.scrollY > scroll)
+            setScroll(window.scrollY)
+        }
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+    });
+
+    return (
+        <div style={{ height: "50px" }}>
+            {visible && (              <SiteHeader />         )}
+        </div>
+    );
+}
   return ( 
      <Provider store={store}>
       <BrowserRouter>
          <Suspense fallback={<h1>Loading page....</h1>}>
-        <div className="jumbotron">
-          <SiteHeader />      {/* New Header  */}
+        <div className="jumbotron jumbotron-fluid">
+        {/* <SiteHeader />      New Header  */}
+        <HideOnScroll/>
           <div className="container-fluid" style={{marginTop: '100px'}}>
             <Switch>
          <Route  path="/login" component={LoginPage} /> 
@@ -27,6 +46,7 @@ const App = () => {
           <Route  path="/findpassword" component={findpassword} />
           <Route component={Main}></Route>
         </Switch>
+        {/* <div hidden id="snipcart" data-api-key={process.env.REACT_APP_SNIPCART} data-config-modal-style="side"></div> */}
 
       </div> 
     </div> 

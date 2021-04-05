@@ -10,7 +10,8 @@ import {
   reqReadMsg,
   reqSearchPeo,
   reqStoryList,
-  reqSubscribe
+  reqSubscribe,
+  reqButter,
 } from '../api/index'
 
 import {
@@ -24,7 +25,8 @@ import {
   READ_MSG,
   RECEIVE_STORYLIST,
   RECEIVE_SUBSCRIPTION,
-  RECEIVE_MATCH
+  RECEIVE_MATCH,
+  RECEIVE_PRODUCTLIST
 } from './action-types'
 
 
@@ -42,7 +44,7 @@ function initIO (dispatch,userId) {
     //绑定'receiveMessage'的监听,来接收服务器发送的消息
     io.socket.on('receiveMsg', function (chatMsg) {
       console.log('浏览器端接收到消息:', chatMsg)
-      // 只有当chatMsg是当前用户相关的消息，才去分发同步action保存消息
+      // 只有当chatMsg是当前用户相关的消息，才去dispatch concurrent action保存消息
       if (userId === chatMsg.from || userId === chatMsg.to) {
         dispatch(receiveMsgOne({chatMsg,userId}))
       }
@@ -57,7 +59,7 @@ async function getMsgList (dispatch,userId) {
   const res = responsent.data
   if (res.code === 0) {
     const { users, chatMsgs } = res.data
-    // 分发同步action
+    // dispatch concurrent action
     dispatch(chat({ users, chatMsgs,userId }))
   }
 }
@@ -98,25 +100,30 @@ const receiveMsgOne = ({chatMsg,userId}) => ({
   type: RECEIVE_MSG_ONE,
   data: {chatMsg,userId}
 })
-// 读取某个聊天消息同步action
+// 
 const readMsgs = ({count,from,to}) => ({
   type: READ_MSG,
   data: {count,from,to}
 })
-//接受story
+//collect story
 const receiveStoryList = storylist => ({
   type: RECEIVE_STORYLIST,
   data: storylist
 })
-// 接收订阅结果
+// collect subscribe
 const receivSubscription = msg => ({
   type: RECEIVE_SUBSCRIPTION,
   data: msg
 })
-// 接收订阅结果
+// collect match
 const receivMatch = (msg,from,to) => ({
   type: RECEIVE_MATCH,
   data: {msg,to}
+})
+//collect products
+const receiveProductList = productlist => ({
+  type: RECEIVE_PRODUCTLIST,
+  data: productlist
 })
 
 // 注册异步action
@@ -145,13 +152,13 @@ export const register = ({username, email, password, password2, type }) => {
     const res = response.data
     if (res.code === 0) {
       console.log('注册成功')
-      //分发成功的同步action
+      //dispatch successful concurrent action
       getMsgList(dispatch,res.data._id) // 注册成功即登录成功的时候获取消息列表
       dispatch(authSuccess(res.data))
     } else {
       console.log('注册失败')
 
-      //分发失败的同步action
+      //dispatch unsuccessful concurrent action
       window.alert(res.msg)
       dispatch(errorMsg(res.msg))
     }
@@ -168,11 +175,11 @@ export const login = ({email, password }) => {
     const response = await reqLogin({email, password })
     const res = response.data
     if (res.code === 0) {
-      //分发成功的同步action
+      //dispatch successful concurrent action
       getMsgList(dispatch,res.data._id) // 登录成功的时候获取消息列表
       dispatch(authSuccess(res.data))
     } else {
-      //分发失败的同步action
+      //dispatch unsuccessful concurrent action
       dispatch(errorMsg(res.msg))
     }
   }
@@ -184,10 +191,10 @@ export const updateUser = user => {
     const response = await reqUpdataUser(user)
     const res = response.data
     if (res.code === 0) {
-      // 分发成功的同步action
+      // dispatch successful concurrent action
       dispatch(receiveMsg(res.data))
     } else {
-      // 分发失败的同步action
+      // dispatch unsuccessful concurrent action
       dispatch(reserMsg(res.msg))
     }
   }
@@ -199,7 +206,7 @@ export const getUser = () => {
     const response = await reqUser()
     const res = response.data
     if (res.code === 0) {
-      // 分发成功的同步
+      // dispatch successful concurrent action
       getMsgList(dispatch,res.data._id) // 获取用户列表说明已经登录成功的时候获取消息列表
       dispatch(receiveMsg(res.data))
     } else {
@@ -213,69 +220,81 @@ export const getUserList = type => {
     const response = await reqUserList(type)
     const res = response.data
     if (res.code === 0) {
-      // 分发成功的同步
+      // dispatch successful concurrent action
       dispatch(receiveUserList(res.data))
     }
   }
 }
-// 发送消息的异步action
+// async send message action
 export const sendMsg = ({ from, to, content }) => {
-    console.log('客发服务发送消息', from, to, content)
     io.socket.emit('sendMsg', { from, to, content })
  
 }
-// 读取消息的异步action
+// async read action
 export const readMsg = (from,to) => {
   return async dispatch => {
     const response = await reqReadMsg(from)
     const res = response.data
     if (res.code === 0) {
-      // 分发成功的同步action
+      // dispatch successful concurrent action
       const count = res.data
       dispatch(readMsgs({count,from,to}))
     }
   }
 }
 
-// 按需获取用户列表
+// fetch user list
 export const getXueLiPeo=({type,xueliArrays})=>{
   return async dispatch=>{
     const response=await reqSearchPeo({type,xueliArrays})
     const res=response.data
     if (res.code===0) {
-      // 分发成功的同步action
+      // dispatch successful concurrent action
       dispatch(receiveUserList(res.data))
     }
   }
 }
 
-//获取附近的故事
+//fetch nearby story
 export const getStory= ({username,location}) =>{
   return async dispatch=>{
     const response=await reqStoryList({username:username,location:location})
-    console.log(response.data)
+    // console.log(response.data)
     const res=response.data
     if (res.code===0) {
-      // 分发成功的同步action
+      // dispatch successful concurrent action
       dispatch(receiveStoryList(res.data))
     }
   }
 }
 
-// 发送订阅
+// SEND SUBSCRIBTION
 export const sendSubscribe = ({from,to}) => {
   return async dispatch => {
     const response = await reqSubscribe({from:from,to:to})
     const res = response.data
     console.log(res)
     if (res.code === 0) {
-      // 分发成功的同步action
+      // dispatch successful concurrent action
       dispatch(receivMatch(res.msg,res.from,res.to));
     } else if(res.code === 1) {
-      // 分发失败的同步action
+      // dispatch unsuccessful concurrent action
       dispatch(receivSubscription(res.msg))
 
 
     };
   }
+}
+
+// async get products
+export const getProductList =()=> {
+  return async dispatch=>{
+
+  const Butter = await reqButter();
+  const res =Butter.data.data
+  console.log(res)
+    // dispatch successful concurrent action
+    dispatch(receiveProductList(res))
+  
+}
 }
