@@ -180,8 +180,8 @@ useEffect(() => {
       </Form.Item>
       
       <Form.Item name="voice" label="Voice story" >
-<VoiceMessage/>    
-  </Form.Item>
+        <VoiceMessage/>    
+       </Form.Item>
 
       <Form.Item
         wrapperCol={{
