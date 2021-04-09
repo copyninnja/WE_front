@@ -4,8 +4,8 @@ import React, { useEffect,useState,useRef } from "react";
 
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import {excerpt} from '../../../util'
-
+import {excerpt} from '../../../util';
+import './button.css';
 const ShopButton = (props) => {
     const {time,category,storage,item_url,item_price,item_name,item_image,item_id,item_description,item_custom1_options,item_custom1_color,item_custom2_options,item_custom2_size}=props.props;
     // console.log(props)
@@ -14,7 +14,7 @@ const ShopButton = (props) => {
             variant="contained"
             color="secondary"
             key={category}
-            className="snipcart-add-item"
+            className="myButton snipcart-add-item "
             data-item-id={item_id}
             data-item-price={item_price}
             data-item-url={item_url}

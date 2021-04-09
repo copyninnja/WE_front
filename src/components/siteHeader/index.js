@@ -5,6 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./siteHeader.css";
 import HeaderUser from '../HeaderUser';
 import MessageNav from '../messageNav'
+import{faShoppingCart} from'@fortawesome/free-solid-svg-icons'
+import{faPager} from'@fortawesome/free-solid-svg-icons'
+import{faCompass} from'@fortawesome/free-solid-svg-icons'
+
+
 const SiteHeader = () => {
   return (
     <nav className="navbar  navbar-light fixed-top  bg-dark ">
@@ -13,20 +18,25 @@ const SiteHeader = () => {
        <img className="weSp" src="./we_sp.png" />
         </Link>
       </nav>
-      <span className="navbar-brand text-white">For  sport and enthusiast !!</span>
+      <span className="myslog">For  sport and enthusiast !!</span>
       <nav className="navbar navbar-expand ">
         <ul id="ulli" className="navbar-nav">
-          <li className="nav-item">
-            <Link className="nav-link text-white" to="/">
-              Stories
+          <div>
+          <Link to="/">
+          <FontAwesomeIcon className="navbar-text text-light head-user" icon={faPager} size="3x"/> 
             </Link>
-          </li>
-          <li className="nav-item">
+            </div>
+            <MessageNav/>
+            <div>
             <Link className="nav-link text-white" to="/shop">
-              Shop
+            <FontAwesomeIcon className="navbar-text text-light head-user" icon={faShoppingCart} size="3x"/> 
             </Link>
-          </li>
-           <MessageNav/>
+            </div>
+            <div>
+            <Link className="nav-link text-white" to="/map">
+            <FontAwesomeIcon className="navbar-text text-light head-user" icon={faCompass} size="3x"/> 
+            </Link>
+            </div>
            <HeaderUser/>
 
        </ul>

@@ -19,6 +19,8 @@ import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import {useSelector} from 'react-redux'
 import { reqWriteStory  } from "../../api";
 import { Redirect } from 'react-router-dom';
+import { VoiceMessage } from 'react-chat-app'
+
 
 
 // import { write } from '../../redux/actions'
@@ -174,12 +176,17 @@ useEffect(() => {
 
       <Form.Item name="switch" label="anonymous" valuePropName="checked">
         <Switch name="anonymose"/>
+        
       </Form.Item>
+      
+      <Form.Item name="voice" label="Voice story" >
+<VoiceMessage/>    
+  </Form.Item>
 
       <Form.Item
         wrapperCol={{
           span: 12,
-          offset: 6,
+          offset: 4,
         }}
       >
         

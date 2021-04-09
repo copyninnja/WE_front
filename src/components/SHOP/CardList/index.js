@@ -54,8 +54,9 @@ const CardList = () => {
     <div>
       <button className="snipcart-customer-signin">My account</button>
       <button className="snipcart-checkout">Click here to checkout</button>
-      <span className="snipcart-items-count"></span>
-      <span className="snipcart-total-price"></span>
+      <span className=" blank"/>
+      <span className="snipcart-items-count">items/</span>
+      <span className="snipcart-total-price">price</span>
       <div id="cardlist" className="row .bg-light">{CardList}</div>;
   </div>
   )
