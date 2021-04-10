@@ -24,6 +24,7 @@ import Chat from '../components/CHAT/Messenger';
 import MAP from './MAP'
 import WriteStory from './WriteStoryPage';
 import {getStory} from '../redux/actions'
+import NewspaperPage from'./NewsPaperPage'
 class Main extends Component {
   constructor () {
     super()
@@ -32,45 +33,19 @@ class Main extends Component {
     }
   }
 
-  // 生命周期函数
   componentWillMount () {
-    // 曾经登录过（cookie中有userId），但是现在还没登录（reducer中有userId的数据），如果cookie中有userId，发送请求获取对应的user
     const userId = Cookies.get('userId')
-
     if (userId && !this.props.user._id) {
-      // 发送异步请求，获取user
       this.props.getUser()
       
     }
 
   }
-  // componentDidMount(){
-  //   if (navigator.geolocation&&this.props.user.username!='') {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       var pos = [
-  //         Math.floor(position.coords.longitude*10000000)/10000000,
-  //         Math.floor(position.coords.latitude*10000000)/10000000
-  //       ];
-  //       this.setState({longti:pos[0],lat:pos[1]})
-  //       this.props.getStory({username:this.props.user.username,location:pos});
-  //       console.log(this.props.user)
-  //     });
-  // }
-  // }
+
 
 
   render () {
-    /**
-     * 实现自动登录的条件
-     * 1、componentDidMount：曾经登录过（cookie中有userId），但是现在还没登录（reducer中有userId的数据），如果cookie中有userId，发送请求获取对应的user
-     * 2、render ：如果cookie中没有userid，跳转到登录页面
-     * 2.1判断redux管理的user中是否有_id,如果没有，暂时不做处理
-     * 2.2如果有_id 说明当前已经登录，显示对应的界面
-     * 3、如果已经登录，如果请求的时根目录
-     * 根据user的type和header来计算出一个重定向的路由路径，并自动重定向
-     *
-     */
-    //  路由跳转情况1：没有userId，直接跳转到login页面
+
 
     const userId = Cookies.get('userId')
 
@@ -78,8 +53,7 @@ class Main extends Component {
 
       return <Redirect to={'/login'} />
     }
-    // 路由跳转情况2：如果没有_id通过生命周期函数去请求用户信息获取用户信息实现自登陆
-    // 如果有_id进根据url的地址进行跳转
+
     if (!this.props.user._id) {
       return null
     } else {
@@ -87,30 +61,11 @@ class Main extends Component {
       let path = this.props.location.pathname
       if (path == '/'){
         console.log(this.props.user)
-      //   if (navigator.geolocation&&this.props.user.username!='') {
-      //     navigator.geolocation.getCurrentPosition((position) => {
-      //       var pos = [
-      //         Math.floor(position.coords.longitude*10000000)/10000000,
-      //         Math.floor(position.coords.latitude*10000000)/10000000
-      //       ];
-      //       this.props.getStory({username:this.props.user.username,location:pos});
-      //       console.log(this.props.user)
-      //     });
-      // }
+    
       path = setPath(this.props.user.type, this.props.user.header)
 
       }
-    //   const { navList } = this
-    //   const routePath = this.props.location.pathname
-    //   const currentNav = navList.find(nav => nav.path === routePath) //得到当前的nav，可能没有
-    //   // 处理底部导航的显示和隐藏
-    //   if (currentNav) {
-    //     if (this.props.user.type == 'meinv') {
-    //       this.navList[0].hide = true
-    //     } else {
-    //       this.navList[1].hide = true
-    //     }
-    //   }
+
 
       return (
         <div>
@@ -122,9 +77,9 @@ class Main extends Component {
           <Route exact path="/writestory" component={WriteStory} />
           <Route exact path="/chat" component={Chat} />
           <Route exact path="/MAP" component={MAP} />
-          <Route path='/chat/:userId' component={ChatPage}>
+          <Route path='/chat/:userId' component={ChatPage}/>
+          <Route path="/news" component={NewspaperPage}/>
 
-          </Route>
         <Redirect to={path} />
           </Switch>
 

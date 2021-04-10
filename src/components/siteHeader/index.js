@@ -8,6 +8,8 @@ import MessageNav from '../messageNav'
 import{faShoppingCart} from'@fortawesome/free-solid-svg-icons'
 import{faPager} from'@fortawesome/free-solid-svg-icons'
 import{faCompass} from'@fortawesome/free-solid-svg-icons'
+import{faNewspaper} from'@fortawesome/free-solid-svg-icons'
+
 
 
 const SiteHeader = () => {
@@ -35,6 +37,11 @@ const SiteHeader = () => {
             <div>
             <Link className="nav-link text-white" to="/map">
             <FontAwesomeIcon className="navbar-text text-light head-user" icon={faCompass} size="3x"/> 
+            </Link>
+            </div>
+            <div>
+            <Link className="nav-link text-white" to="/news">
+            <FontAwesomeIcon className="navbar-text text-light head-user" icon={faNewspaper} size="3x"/> 
             </Link>
             </div>
            <HeaderUser/>
