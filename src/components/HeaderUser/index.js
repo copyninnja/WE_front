@@ -8,6 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import { reserMsg } from '../../redux/actions'
 import { connect } from 'react-redux'
 import {useSelector, useDispatch} from 'react-redux'
+import { colors } from '@material-ui/core';
 
 const HeaderUser = (props) => {
         const [anchorEl, setAnchorEl] = React.useState(null);
@@ -29,6 +30,7 @@ const HeaderUser = (props) => {
           dispatch(reserMsg())
           setAnchorEl(null);
         };
+
         // return console.log(context.isAuthenticated === true);
         return user.username=="" ?(
                 <div>
@@ -84,6 +86,8 @@ const HeaderUser = (props) => {
                 open={open}
                 onClose={handleClose}
             >   
+                <MenuItem ><Link to="/profile"><p>Profile</p></Link></MenuItem>
+
                 <MenuItem data-cy="SignOut" onClick={handleSignOut}>SignOut</MenuItem>
                         </Menu>
             </div>

@@ -23,8 +23,9 @@ import ChatPage from './ChatPage';
 import Chat from '../components/CHAT/Messenger';
 import MAP from './MAP'
 import WriteStory from './WriteStoryPage';
-import {getStory} from '../redux/actions'
-import NewspaperPage from'./NewsPaperPage'
+import {getStory} from '../redux/actions';
+import NewspaperPage from'./NewsPaperPage';
+import MinePage from './MinePage';
 class Main extends Component {
   constructor () {
     super()
@@ -79,6 +80,7 @@ class Main extends Component {
           <Route exact path="/MAP" component={MAP} />
           <Route path='/chat/:userId' component={ChatPage}/>
           <Route path="/news" component={NewspaperPage}/>
+          <Route path="/profile" component={MinePage}/>
 
         <Redirect to={path} />
           </Switch>
