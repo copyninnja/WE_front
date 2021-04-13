@@ -1,7 +1,7 @@
 import React from 'react';
 import {excerpt2} from '../util'
 const fetch = require("isomorphic-fetch");
-const { compose, withProps, withHandlers } = require("recompose");
+const { compose, withProps, withHandlers,withStateHandlers } = require("recompose");
 const {
   withScriptjs,
   withGoogleMap,
@@ -27,17 +27,39 @@ const MapWithAMarkerClusterer = compose(
       console.log(clickedMarkers)
     },
   }),
-
+  withStateHandlers(() => ({
+    isOpen: false,
+  }), {
+    onToggleOpen: ({ isOpen }) => () => ({
+      isOpen: !isOpen,
+    })
+  }),
   withScriptjs,
   withGoogleMap
 )(props =>
   <GoogleMap
-    defaultZoom={6}
-    center={props.center}
+    defaultZoom={2}
+    center={{ lat: 52.2423231, lng:  -7.1263607}}
     >
+    <Marker key="currentLoc" onClick={props.onToggleOpen} position={{lat:props.center.lat,lng:props.center.lng}} icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png">
+    {
+        props.isOpen && 
+          <InfoBox
+            onCloseClick={props.onToggleOpen}
+            options={{ closeBoxURL: ``, enableEventPropagation: true }}
+          >
+            <div style={{ backgroundColor: `white`, opacity: 0.75, padding: `12px` }}>
+              <div style={{ fontSize: `16px`, fontColor: `#08233B` }}>
+                Hello, You are here !
+              </div>
+            </div>
+          </InfoBox>
+      }
+    </Marker>
+    {console.log(props)}
     <MarkerClusterer
       onClick={props.onMarkerClustererClick}
-      averageCenter
+      
       enableRetinaIcons
       gridSize={60}
     >
@@ -70,7 +92,6 @@ class DemoApp extends React.PureComponent {
   componentDidMount() {
 
         this.setState({ markers: jsonData.photos });
- 
   }
 
   render() {

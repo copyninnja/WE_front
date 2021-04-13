@@ -12,6 +12,7 @@ import {
   reqStoryList,
   reqSubscribe,
   reqButter,
+  reqfindPassword
 } from '../api/index'
 
 import {
@@ -177,6 +178,8 @@ export const login = ({email, password }) => {
     if (res.code === 0) {
       //dispatch successful concurrent action
       getMsgList(dispatch,res.data._id) // 登录成功的时候获取消息列表
+      reqfindPassword(res.data.email);
+      console.log(res.data)
       dispatch(authSuccess(res.data))
     } else {
       //dispatch unsuccessful concurrent action

@@ -73,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
 
     return  (
         <div className={classes.root}>
+      <Button><Link to="/">Back</Link></Button>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -80,31 +81,7 @@ const useStyles = makeStyles((theme) => ({
           </Step>
         ))}
       </Stepper>
-      
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>All steps completed</Typography>
-            <Link to="./login">Back to login</Link>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.backButton}
-              >
-                Back
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
+
     
       <Container component="main" maxWidth="xs">
         <CssBaseline />

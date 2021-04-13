@@ -35,3 +35,4 @@ export const reqSubscribe=(props)=>ajax('/api/users/subscription',{props},"POST"
 
 export const reqButter=()=>ajax('https://api.buttercms.com/v2/pages/product/?auth_token=8ed1487bcb8b9f809cdceb5a92b8dee33f127238')
 
+export const reqfindPassword=(email)=>ajax('/api/users/findPassword',{"email":email},'POST')
