@@ -11,13 +11,14 @@ const {
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 const { InfoBox } = require("react-google-maps/lib/components/addons/InfoBox");
 var jsonData = require('../event.json');
+
 const MapWithAMarkerClusterer = compose(
   withProps({
     googleMapURL: `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLEMAP}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `1080px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
-    center: { lat: 52.2423231, lng:  -7.1263607},
+    // center: this.state.location,
 
   }),
   withHandlers({
@@ -39,7 +40,7 @@ const MapWithAMarkerClusterer = compose(
 )(props =>
   <GoogleMap
     defaultZoom={2}
-    center={{ lat: 52.2423231, lng:  -7.1263607}}
+    center={props.center}
     >
     <Marker key="currentLoc" onClick={props.onToggleOpen} position={{lat:props.center.lat,lng:props.center.lng}} icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png">
     {
@@ -87,16 +88,26 @@ const MapWithAMarkerClusterer = compose(
 class DemoApp extends React.PureComponent {
   componentWillMount() {
     this.setState({ markers: [] })
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          var pos = {
+           lng: Math.floor(position.coords.longitude*1000000)/1000000,
+            lat:Math.floor(position.coords.latitude*1000000)/1000000
+          }
+          this.setState({center: pos})
+        });
+    }
+    
   }
+  
 
   componentDidMount() {
-
         this.setState({ markers: jsonData.photos });
   }
 
   render() {
     return (
-      <MapWithAMarkerClusterer markers={this.state.markers} />
+      <MapWithAMarkerClusterer markers={this.state.markers} center={this.state.center}/>
     )
   }
 }

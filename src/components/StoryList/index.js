@@ -12,6 +12,8 @@ import {sendSubscribe} from '../../redux/actions';
 import StoryButton from '../StoryButton'
 import Item from 'antd/lib/list/Item';
 let listData = [];
+let subscribed=[]
+let len=0;
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -21,12 +23,12 @@ const IconText = ({ icon, text }) => (
 );
 
 class StoryList extends Component {
-  constructor () {
-    super()
+  constructor (prop) {
+    super(prop)
     this.state={
       distance:[],
-      subscribed:[]
-
+      subscribed:[],
+      listData:[]
   }
     
   }
@@ -51,15 +53,25 @@ calculate=(lat,longti)=>{
 setDistance = dis => {
   //  console.log(sport)
   const newFris=[...this.state.distance];
-  newFris.splice(0,0,dis);
+  newFris.push(dis);
   // newFris.reverse();
   this.setState({
     distance:newFris
   })
 }
+setList = lis => {
+  //  console.log(sport)
+  const newFris=[...lis];
+    // newFris.reverse();
+  this.setState({
+    listData:newFris
+  })
+  listData=newFris
+}
 subscribe = (username, e) => {
   e.target.disabled = true;
   this.state.subscribed.push(username)
+  subscribed.push(username);
   const from = this.props.user.username
   const to = username
   if (username != "anonymose") {
@@ -89,21 +101,21 @@ componentDidUpdate(prevProps){
         a.push(this.props.story[i].location[key])
         if(a.length%2==0){
         this.calculate(a[0],a[1]);
+        console.log(this.props.story[i].location)
         a.splice(0,2);
         }
 
       }
     }
     }
-    console.log(this.state.distance[0])
-    if(this.state.distance.length==Object.keys(this.props.story).length){
+    if(len==Object.keys(this.props.story).length){  
       let j=0;
-      listData=[];
       console.log(this.props.story);
       console.log(this.state.distance);
-
+      const newS=[];
+      // newFris.reverse();
     for (var i in this.props.story) {
-      listData.push({
+      newS.push({
         key: `${this.props.story[i].time}`,
         title: `${this.props.story[i].username}`,
         avatar: require(`../../assets/images/${this.props.story[i].header}`),
@@ -113,11 +125,14 @@ componentDidUpdate(prevProps){
       });
       j+=1;
     }
-    console.log(this.state.distance,j)
+    console.log(this.state.listData)
 
+    this.setList(newS)
 
+    // len+=1;
   }
 
+  len+=1;
 }
 
 
@@ -142,7 +157,7 @@ render(){
     renderItem={item => (
  <List.Item
         key={item.key}
-        actions={subs.subscribe.includes(item.title)||item.title===subs.username||item.title=="anonymous" ?
+        actions={subs.subscribe.includes(item.title)||item.title===subs.username||item.title=="anonymous"||subscribed.includes(item.title) ?
           [
           // <IconText icon={PlusOutlined} text="subscribe" key="list-vertical-star-o" />,
           <Button disabled variant="contained" color="secondary" key='list-vertical-star-o' ><AddIcon className="fa fa-plus-circle"/>subscribe</Button>,
@@ -176,7 +191,6 @@ render(){
           description={item.description}
         />
         {item.content}
-        {listData}
       </List.Item>
     )}
   />
