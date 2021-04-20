@@ -1,4 +1,3 @@
-// 帅哥信息完善的路由容器组件
 import React, { Component } from 'react'
 import {Redirect} from 'react-router-dom'
 import Container from '@material-ui/core/Container';

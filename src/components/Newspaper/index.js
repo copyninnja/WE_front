@@ -42,7 +42,7 @@ return(
     <div className="subhead">Waterford, {moment().format("dddd, MMMM Do YYYY, h:mm")}</div>
     </div>
 
-<div className="content">
+<div id="contentClass">
     <div className="collumns">
         {news.map((new1,id) => 
              <div className="collumn" key={id}>

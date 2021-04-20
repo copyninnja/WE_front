@@ -1,19 +1,13 @@
-import React ,{useContext}  from "react";
+import React ,{useState,useEffect}  from "react";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { Link, Redirect } from "react-router-dom";
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import  useForm from 'react-hook-form';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import {reqfindPassword} from '../api/index'
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,54 +28,43 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(3, 0, 2),
     },
   }));
-  function getSteps() {
-    return ['enter your email address', 'enter validation code', 'change your password'];
-  }
-  
-  function getStepContent(stepIndex) {
-    switch (stepIndex) {
-      case 0:
-        return 'Select campaign settings...';
-      case 1:
-        return 'What is an ad group anyways?';
-      case 2:
-        return 'This is the bit I really care about!';
-      default:
-        return 'Unknown stepIndex';
-    }
-  }
 
+  let timeChange;
   export default function FindPassword() {
     const classes = useStyles();
-    const {register,handleSubmit}= useForm();
+    const [email, setEmail] = useState();
 
-    
-    const regis= props =>{
-     
-  }
-  const [activeStep, setActiveStep] = React.useState(0);
-  const steps = getSteps();
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+    const [time, setTime] = useState(60);
+    const [btnDisabled, setBtnDisabled] = useState(false);
+    const [btnContent, setBtnContent] = useState('find password');
+  
+    useEffect(() => {
+      clearInterval(timeChange);
+    }, []);
+  
+    useEffect(() => {
+      if (time > 0 && time < 60) {
+        setBtnContent(`${time}s to send email again`);
+      } else {
+        clearInterval(timeChange);
+        setBtnDisabled(false);
+        setTime(60);
+        setBtnContent('find password');
+      }
+    }, [time]);
+  
+    const getPhoneCaptcha = () => {
+      // 注意，不要使用 setTime(t-1) ： 闭包问题会导致time一直为59
+       timeChange = setInterval(() => setTime(t => --t), 1000);
+      setBtnDisabled(true);
+      reqfindPassword(email);
+    };
+  
 
 
     return  (
         <div className={classes.root}>
-      <Button><Link to="/">Back</Link></Button>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-
+<Link to="/"><Button variant="contained">Back</Button></Link>
     
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -91,11 +74,10 @@ const useStyles = makeStyles((theme) => ({
           <Typography component="h1" variant="h5">
            retrieve password
           </Typography>
-          <form data-cy="form" className={classes.form} noValidate onSubmit={handleSubmit((data)=>regis(data))}>
+          <form data-cy="form" className={classes.form} noValidate >
             <TextField
               variant="outlined"
               margin="normal"
-              inputRef={register}
               data-cy="emailinput"
               required
               fullWidth
@@ -104,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={val => setEmail(val.target.value)}
             />
 
 
@@ -112,9 +95,11 @@ const useStyles = makeStyles((theme) => ({
               fullWidth
               variant="contained"
               color="primary"
+              disabled={btnDisabled}
               className={classes.submit}
+              onClick={getPhoneCaptcha}
             >
-              find password
+              {btnContent}
             </Button>
             
           </form>

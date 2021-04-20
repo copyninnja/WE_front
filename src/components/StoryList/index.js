@@ -37,8 +37,8 @@ calculate=(lat,longti)=>{
       Math.floor(position.coords.latitude*10000000)/10000000
     ];
     let dis=distanceCal(lat,longti,pos[0],pos[1])
+    console.log(dis)
     dis=parseInt(dis/5)*5+5;
-    // console.log(dis)
     if(dis){   
     this.setDistance(dis)
     return dis;}
@@ -51,7 +51,8 @@ calculate=(lat,longti)=>{
 setDistance = dis => {
   //  console.log(sport)
   const newFris=[...this.state.distance];
-  newFris.push(dis);
+  newFris.splice(0,0,dis);
+  // newFris.reverse();
   this.setState({
     distance:newFris
   })
@@ -72,8 +73,8 @@ componentWillMount(){
   if (navigator.geolocation&&this.props.user.username!='') {
     navigator.geolocation.getCurrentPosition((position) => {
       var pos = [
-        Math.floor(position.coords.longitude*10000000)/10000000,
-        Math.floor(position.coords.latitude*10000000)/10000000
+        Math.floor(position.coords.longitude*1000000)/1000000,
+        Math.floor(position.coords.latitude*1000000)/1000000
       ];
       this.props.getStory({username:this.props.user.username,location:pos});
     });
@@ -85,28 +86,38 @@ componentDidUpdate(prevProps){
   if(this.props.story.location!==prevProps.story.location){
     for (var i in this.props.story) {
       for (var key in this.props.story[i].location) {
-        // console.log(key,a[key])
         a.push(this.props.story[i].location[key])
+        if(a.length%2==0){
         this.calculate(a[0],a[1]);
-        
+        a.splice(0,2);
+        }
+
       }
     }
     }
-    if(this.state.distance!== []){
-      let j=0
+    console.log(this.state.distance[0])
+    if(this.state.distance.length==Object.keys(this.props.story).length){
+      let j=0;
       listData=[];
+      console.log(this.props.story);
+      console.log(this.state.distance);
+
     for (var i in this.props.story) {
       listData.push({
-        key: `${i}`,
+        key: `${this.props.story[i].time}`,
         title: `${this.props.story[i].username}`,
         avatar: require(`../../assets/images/${this.props.story[i].header}`),
         description: '<' + this.state.distance[j] + 'km',
         content: `${this.props.story[i].content}`,
-        img:this.props.story[i].Img[j]?this.props.story[i].Img:null
+        img:this.props.story[i].Img[0]?this.props.story[i].Img:null
       });
-
+      j+=1;
     }
+    console.log(this.state.distance,j)
+
+
   }
+
 }
 
 
@@ -165,6 +176,7 @@ render(){
           description={item.description}
         />
         {item.content}
+        {listData}
       </List.Item>
     )}
   />

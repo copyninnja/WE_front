@@ -27,7 +27,7 @@ const App = () => {
     });
 
     return (
-        <div style={{ height: "50px" }}>
+        <div style={{ height: "100px" }}>
             {visible && (              <SiteHeader />         )}
         </div>
     );
@@ -39,7 +39,7 @@ const App = () => {
         <div className="jumbotron jumbotron-fluid">
         {/* <SiteHeader />      New Header  */}
         <HideOnScroll/>
-          <div className="container-fluid" style={{marginTop: '100px'}}>
+          <div className="container-fluid" style={{marginTop: '150px'}}>
             <Switch>
          <Route  path="/login" component={LoginPage} /> 
           <Route  path="/register" component={registerPage} />

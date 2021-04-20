@@ -43,7 +43,7 @@ class Compose extends Component{
   console.log(headerList)
     return (   
       <div className="compose">
-                   <Popover content={headerList.map((row, ri) => (
+                <Popover content={headerList.map((row, ri) => (
                   <Row key={ri} className="emoji" >
                   {row.map(cellId => <Col span={6} key={cellId.text} id={cellId.text}  onClick={()=>
                 this.setState({ content:  this.state.content + cellId.text })

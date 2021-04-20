@@ -64,8 +64,8 @@ class MinePage extends Component {
 
     const sports=['badminton','football','basketball','running'];
     const marks = {
-      0: '10km',
-      20: '20km',
+      10: '10km',
+      30: '30km',
       50: '50km',
       100: {
         style: {
@@ -130,7 +130,7 @@ class MinePage extends Component {
     </div>
   </FormControl>
   <p>choose maximum distance of story you would like to receive</p>
-  <Slider marks={marks} step={10} defaultValue={this.props.acceptDistance}  onChange={val => this.handleChange('acceptDistance', val)}
+  <Slider min="10" marks={marks} step={10} defaultValue={this.props.acceptDistance}  onChange={val => this.handleChange('acceptDistance', val)}
 />
            <TextField
            variant="outlined"
