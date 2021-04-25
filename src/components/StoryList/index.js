@@ -26,34 +26,34 @@ class StoryList extends Component {
   constructor (prop) {
     super(prop)
     this.state={
-      distance:[],
+      distance:{},
       subscribed:[],
       listData:[]
   }
     
   }
-calculate=(lat,longti)=>{
+calculate=(time,lat,longti)=>{
   navigator.geolocation.getCurrentPosition((position) => {
     var pos = [
       Math.floor(position.coords.longitude*10000000)/10000000,
       Math.floor(position.coords.latitude*10000000)/10000000
     ];
     let dis=distanceCal(lat,longti,pos[0],pos[1])
-    console.log(dis)
     dis=parseInt(dis/5)*5+5;
     if(dis){   
-    this.setDistance(dis)
+    this.setDistance(time,dis)
     return dis;}
     else{
-      this.setDistance(5)
+      this.setDistance(time,5)
       return 5;
     }
 });
 }
-setDistance = dis => {
+setDistance = (time,dis) => {
   //  console.log(sport)
-  const newFris=[...this.state.distance];
-  newFris.push(dis);
+  var newFris = {...this.state.distance};
+  // newFris.push({key:time,value:dis})
+  newFris[`${time}`]=dis;
   // newFris.reverse();
   this.setState({
     distance:newFris
@@ -100,8 +100,8 @@ componentDidUpdate(prevProps){
       for (var key in this.props.story[i].location) {
         a.push(this.props.story[i].location[key])
         if(a.length%2==0){
-        this.calculate(a[0],a[1]);
-        console.log(this.props.story[i].location)
+        this.calculate(this.props.story[i].time,a[0],a[1]);
+        console.log(this.props.story[i].time)
         a.splice(0,2);
         }
 
@@ -119,7 +119,7 @@ componentDidUpdate(prevProps){
         key: `${this.props.story[i].time}`,
         title: `${this.props.story[i].username}`,
         avatar: require(`../../assets/images/${this.props.story[i].header}`),
-        description: '<' + this.state.distance[j] + 'km',
+        description: '<' + this.state.distance[this.props.story[i].time] + 'km',
         content: `${this.props.story[i].content}`,
         img:this.props.story[i].Img[0]?this.props.story[i].Img:null
       });

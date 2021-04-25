@@ -114,6 +114,7 @@
     "test:e2e": "cypress run",
     "cypress": "cypress",
     "start:ci": "start-server-and-test 'http-server ./build  -p 3000' 3000 'cypress run --browser chrome '"
+
   },
   "eslintConfig": {
     "extends": "react-app"

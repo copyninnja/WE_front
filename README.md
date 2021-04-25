@@ -1,28 +1,52 @@
-# Assignment 1 - ReactJS app.
+# We Sport - Frontend
 
-Name: Gong Xiaofeng
+author: Gong Xiaofeng
 
 ## Features.
 
-- Multiple Genre - allow user choose **more than 1** genre to filter the movie. user can add or delete genre 
+-  Authentication - The basic login/register functions
 
-- Language - after user select one language in radio box, the page will **automatically rerender** itself by re-fetching selected language api movies.
+- remember me - local storage
 
-- private route - user has to login before accessing the corresponding page ,otherwise user will be **redirected to login page**.
+- cookie - user will be granted with a cookie after successfully login
 
-- auth Context - check authentication status,provide context for different passage of the ME button/loginPage.
+- forget password - using email to notify users to change password
 
-- login check - support **useform** to simply verify validate email address and password length ,etc. Alert when inappropriate
+- customized avatar- allow user to use their own icon
 
-- login DB - support **firebase** to store user email and password. Alert when incorrect. Register if not having an account.
+- accept distance - user can choose stories they wanna see with a slide bar
 
-- popular Page - an endpoint of  popular movies. add to Like array
+- write story - user can write story in text,image, audio and video, the system will record user's fuzzy location
 
-- Carousel - **automatically show** different movie posters, user can select a specific one by clicking the select bar
+- fuzzy location - the system will dim the user's location by truncating user's location
 
-- rate - show message when user hover his/her mouse on it, when user click one of it, it will send a **POST/DELETE/PUT** function to rate the corresponding movie by  **temporary session** . Alert the response.
+- anonymous - user can choose to be anonymous when writing story so that other user couldn't see your name and subscribe you
 
-- Blur - blur the backdrop poster of the movie and set it as the **background** in movieDetails and concentrate the elaboration
+- nearby story - user can see their nearby stories within their accept distance
+
+-  subscribe - user can subscribe other users, one-way subscribe will pop a notice while bidirectional subscription will pop up a "match" which enable users to chat.
+
+- Page segmentation -  used for segmentation in nearby story page
+
+- Menu bar - the bar is fixed on the top. If user scroll down it will appear while it would be invisible when user scroll up.
+
+- upload images - the images will be stored in the database named as the timestamps
+
+- chat - users that subscribed each other can chat in a delicate chat box with interesting images
+
+- conversation list - all the conversations will be listed
+
+- purchase - user can purchase products listed in the shop page
+
+- item card - item card is equipped with regular operation buttons
+
+- account - user can have a financial account used for purchasing items
+
+- shipping - user can choose different ways of shipping with their current address
+
+- payment - in the final process of purchasing , user can choose different ways to pay
+
+- bill - user will get a bill of what they bought after transaction finished successfully
 
   ## Setup requirements
 
@@ -43,7 +67,7 @@ Name: Gong Xiaofeng
   ## API Data Model.
 
   ..... List the additional TMDB endpoints used in your assignment, e.g.
-  
+
   1. https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&page=5&language=${language} *--Get popular movies*
   2. https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&page=1*--Get TopRate movies*
   3. https://api.themoviedb.org/3/authentication/token/new?api_key=${process.env.REACT_APP_TMDB_KEY} *--Get request token*
