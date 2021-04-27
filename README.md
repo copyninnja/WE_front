@@ -58,11 +58,11 @@ author: Gong Xiaofeng
 
   ## Setup requirements
 
-  ```
+```bat
   npm install
   npm run build
-npm start
-  ```
+  npm start
+```
 
   customize your Google API key
 
@@ -70,7 +70,7 @@ npm start
 
   an openweather API key
 
-   a News API key
+  a News API key
 
   register a Snipcart account and configure your website
   
